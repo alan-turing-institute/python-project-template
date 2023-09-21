@@ -29,5 +29,7 @@ You will be prompted for the following information:
   - `Apache-2.0`
   - `GPL-3.0`
 - `pip_name`: The name of your project when you do `import name` or `pip install name`. This should be a valid Python package name (use underscores instead of hyphens, for example).
+- `typing`: Whether to use `mypy` for type checking. If you're not sure, I'd recommend basic checks (second option).
+- `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.8`.
 
 Once you've answered all the questions, Copier will generate a new project in the directory you specified. If you're migrating existing code, you should move all your code into the `{{ pip_name }}` directory, and delete the `template` directory.
