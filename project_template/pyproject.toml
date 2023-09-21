@@ -1,17 +1,17 @@
 [build-system]
-{% if backend == "hatch" %}
+{%- if backend == "hatch" %}
 requires = ["hatchling"]
 build-backend = "hatchling.build"
-{% elif backend == "setuptools" %}
+{%- elif backend == "setuptools" %}
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
-{% elif backend == "poetry" %}
+{%- elif backend == "poetry" %}
 requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-{% endif %}
+{%- endif %}
 
 
-{% if backend == "poetry" -%}
+{%- if backend == "poetry" %}
 [tool.poetry]
 name = "{{ project_name }}"
 version = "0.1.0"
@@ -20,13 +20,13 @@ authors = [
 ]
 homepage = "{{ url }}"
 repository = "{{ url }}"
-{% if license == "BSD" -%}
+{%- if license == "BSD" %}
 license = "BSD-3-Clause"
-{% elif license == "Apache" -%}
+{%- elif license == "Apache" %}
 license = "Apache-2.0"
-{% elif license == "MIT" -%}
+{%- elif license == "MIT" %}
 license = "MIT"
-{% elif license == "GPL" -%}
+{%- elif license == "GPL" %}
 license = "GPL-3.0-or-later"
 {%- endif %}
 description = "{{ project_short_description }}"
@@ -59,10 +59,10 @@ dev = ["pytest", "pytest-cov"]
 
 
 
-{% else -%}
+{%- else %}
 [project]
 name = "{{ project_name }}"
-{% if backend == "setuptools" -%}
+{%- if backend == "setuptools" %}
 version = "0.1.0"  # need to also update version in src/{{ pip_name }}/__init__.py
 {%- endif %}
 authors = [
