@@ -13,19 +13,19 @@ python -m pip install {{ pip_name }}
 ```
 
 From source:
-{% if backend == "poetry" %}
+{% if backend == "poetry" -%}
 ```bash 
 git clone {{ url }}
 cd {{ project_name }}
 poetry install
 ```
-{% else %}
+{% else -%}
 ```bash
 git clone {{ url }}
 cd {{ project_name }}
 python -m pip install .
 ```
-{% endif %}
+{%- endif %}
 
 ## Usage
 

@@ -11,7 +11,7 @@ build-backend = "poetry.core.masonry.api"
 {% endif %}
 
 
-{% if backend == "poetry" %}
+{% if backend == "poetry" -%}
 [tool.poetry]
 name = "{{ project_name }}"
 version = "0.1.0"
@@ -20,15 +20,15 @@ authors = [
 ]
 homepage = "{{ url }}"
 repository = "{{ url }}"
-{% if license == "BSD" %}
+{% if license == "BSD" -%}
 license = "BSD-3-Clause"
-{% elif license == "Apache" %}
+{% elif license == "Apache" -%}
 license = "Apache-2.0"
-{% elif license == "MIT" %}
+{% elif license == "MIT" -%}
 license = "MIT"
-{% elif license == "GPL" %}
+{% elif license == "GPL" -%}
 license = "GPL-3.0-or-later"
-{% endif %}
+{%- endif %}
 description = "{{ project_short_description }}"
 readme = "README.md"
 
@@ -38,9 +38,9 @@ classifiers = [
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Topic :: Scientific/Engineering",
-  {% if typing != "no_typing" %}
+{% if typing != "no_typing" -%}
   "Typing :: Typed",
-  {% endif %}
+{%- endif %}
 ]
 
 [tool.poetry.dependencies]
@@ -59,12 +59,12 @@ dev = ["pytest", "pytest-cov"]
 
 
 
-{% else %}
+{% else -%}
 [project]
 name = "{{ project_name }}"
-{% if backend == "setuptools" %}
+{% if backend == "setuptools" -%}
 version = "0.1.0"  # need to also update version in src/{{ pip_name }}/__init__.py
-{% endif %}
+{%- endif %}
 authors = [
   { name = "{{ full_name }}", email = "{{ email }}" },
 ]
@@ -75,15 +75,15 @@ classifiers = [
   "Development Status :: 1 - Planning",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
-{% if license == "BSD" %}
+{%- if license == "BSD" %}  
   "License :: OSI Approved :: BSD License",
-{% elif license == "Apache" %}
+{%- elif license == "Apache" %}
   "License :: OSI Approved :: Apache Software License",
-{% elif license == "MIT" %}
+{%- elif license == "MIT" %}
   "License :: OSI Approved :: MIT License",
-{% elif license == "GPL" %}
+{%- elif license == "GPL" %}
   "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-{% endif %}
+{%- endif %}
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
@@ -94,13 +94,13 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Topic :: Scientific/Engineering",
-{% if typing != "no_typing" %}
+{%- if typing != "no_typing" %}
   "Typing :: Typed",
-{% endif %}
+{%- endif %}
 ]
-{% if backend == "hatch" %}
+{% if backend == "hatch" -%}
 dynamic = ["version"]  # version is set in src/{{ pip_name }}/__init__.py
-{% endif %}
+{%- endif %}
 dependencies = []
 
 [project.optional-dependencies]
@@ -127,7 +127,7 @@ envs.default.dependencies = [
   "pytest-cov",
 ]
 
-{% endif %}
+{%- endif %}
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -151,7 +151,7 @@ port.exclude_lines = [
 ]
 
 
-{% if typing != "no_typing" %}
+{% if typing != "no_typing" -%}
 [tool.mypy]
 files = ["src", "tests"]
 python_version = "3.8"
@@ -160,9 +160,9 @@ warn_unreachable = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = true
-{% if typing == "loose" %}
+{% if typing == "loose" -%}
 strict = false
-{% elif typing == "strict" %}
+{% elif typing == "strict" -%}
 strict = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
@@ -171,8 +171,8 @@ enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 module = "{{ pip_name }}.*"
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
-{% endif %}
-{% endif %}
+{%- endif %}
+{%- endif %}
 
 [tool.ruff]
 select = [
@@ -201,15 +201,15 @@ extend-ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
 ]
-{% if backend == "poetry" %}
+{% if backend == "poetry" -%}
 target-version = "py38"
-{% endif %}
+{%- endif %}
 src = ["src"]
 unfixable = [
   "F841", # Would remove unused variables
 ]
 exclude = []
 flake8-unused-arguments.ignore-variadic-names = true
-{% if typing != "no_typing" %}
+{% if typing != "no_typing" -%}
 isort.required-imports = ["from __future__ import annotations"]
-{% endif %}
+{%- endif %}
