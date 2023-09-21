@@ -1,0 +1,215 @@
+[build-system]
+{% if backend == "hatch" %}
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+{% elif backend == "setuptools" %}
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+{% elif backend == "poetry" %}
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+{% endif %}
+
+
+{% if backend == "poetry" %}
+[tool.poetry]
+name = "{{ project_name }}"
+version = "0.1.0"
+authors = [
+  "{{ full_name }} <{{ email }}>",
+]
+homepage = "{{ url }}"
+repository = "{{ url }}"
+{% if license == "BSD" %}
+license = "BSD-3-Clause"
+{% elif license == "Apache" %}
+license = "Apache-2.0"
+{% elif license == "MIT" %}
+license = "MIT"
+{% elif license == "GPL" %}
+license = "GPL-3.0-or-later"
+{% endif %}
+description = "{{ project_short_description }}"
+readme = "README.md"
+
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering",
+  {% if typing != "no_typing" %}
+  "Typing :: Typed",
+  {% endif %}
+]
+
+[tool.poetry.dependencies]
+python = {{ python_version_range }}
+
+pytest = { version = ">=6", optional = true }
+pytest-cov = { version = ">=3", optional = true }
+
+[tool.poetry.dev-dependencies]
+pytest = ">= 6"
+pytest-cov = ">= 3"
+
+[tool.poetry.extras]
+test = ["pytest", "pytest-cov"]
+dev = ["pytest", "pytest-cov"]
+
+
+
+{% else %}
+[project]
+name = "{{ project_name }}"
+{% if backend == "setuptools" %}
+version = "0.1.0"  # need to also update version in src/{{ pip_name }}/__init__.py
+{% endif %}
+authors = [
+  { name = "{{ full_name }}", email = "{{ email }}" },
+]
+description = "{{ project_short_description }}"
+readme = "README.md"
+requires-python = "{{ python_version_range }}"
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+{% if license == "BSD" %}
+  "License :: OSI Approved :: BSD License",
+{% elif license == "Apache" %}
+  "License :: OSI Approved :: Apache Software License",
+{% elif license == "MIT" %}
+  "License :: OSI Approved :: MIT License",
+{% elif license == "GPL" %}
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+{% endif %}
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+{% if typing != "no_typing" %}
+  "Typing :: Typed",
+{% endif %}
+]
+{% if backend == "hatch" %}
+dynamic = ["version"]  # version is set in src/{{ pip_name }}/__init__.py
+{% endif %}
+dependencies = []
+
+[project.optional-dependencies]
+test = [
+  "pytest >=6",
+  "pytest-cov >=3",
+]
+dev = [
+  "pytest >=6",
+  "pytest-cov >=3",
+]
+
+[project.urls]
+Homepage = "{{ url }}"
+"Bug Tracker" = "{{ url }}/issues"
+Discussions = "{{ url }}/discussions"
+Changelog = "{{ url }}/releases"
+
+
+[tool.hatch]
+version.path = "src/{{ pip_name  }}/__init__.py"
+envs.default.dependencies = [
+  "pytest",
+  "pytest-cov",
+]
+
+{% endif %}
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
+xfail_strict = true
+filterwarnings = [
+  "error",
+]
+log_cli_level = "INFO"
+testpaths = [
+  "tests",
+]
+
+
+[tool.coverage]
+run.source = ["{{ pip_name }}"]
+port.exclude_lines = [
+  'pragma: no cover',
+  '\.\.\.',
+  'if typing.TYPE_CHECKING:',
+]
+
+
+{% if typing != "no_typing" %}
+[tool.mypy]
+files = ["src", "tests"]
+python_version = "3.8"
+show_error_codes = true
+warn_unreachable = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+{% if typing == "loose" %}
+strict = false
+{% elif typing == "strict" %}
+strict = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+
+
+[[tool.mypy.overrides]]
+module = "{{ pip_name }}.*"
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+{% endif %}
+{% endif %}
+
+[tool.ruff]
+select = [
+  "E", "F", "W", # flake8
+  "B",           # flake8-bugbear
+  "I",           # isort
+  "ARG",         # flake8-unused-arguments
+  "C4",          # flake8-comprehensions
+  "EM",          # flake8-errmsg
+  "ICN",         # flake8-import-conventions
+  "ISC",         # flake8-implicit-str-concat
+  "G",           # flake8-logging-format
+  "PGH",         # pygrep-hooks
+  "PIE",         # flake8-pie
+  "PL",          # pylint
+  "PT",          # flake8-pytest-style
+  "PTH",         # flake8-use-pathlib
+  "RET",         # flake8-return
+  "RUF",         # Ruff-specific
+  "SIM",         # flake8-simplify
+  "UP",          # pyupgrade
+  "YTT",         # flake8-2020
+  "EXE",         # flake8-executable
+]
+extend-ignore = [
+  "PLR",    # Design related pylint codes
+  "E501",   # Line too long
+]
+{% if backend == "poetry" %}
+target-version = "py38"
+{% endif %}
+src = ["src"]
+unfixable = [
+  "F841", # Would remove unused variables
+]
+exclude = []
+flake8-unused-arguments.ignore-variadic-names = true
+{% if typing != "no_typing" %}
+isort.required-imports = ["from __future__ import annotations"]
+{% endif %}

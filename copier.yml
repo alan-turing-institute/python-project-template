@@ -1,0 +1,81 @@
+# CONFIGURATION -------------------------
+_subdirectory: project_template
+_templates_suffix: ""
+_skip_if_exists:
+  - CHANGELOG.md
+
+# PROMPT --------------------------------
+project_name:
+  type: str
+  help: Please provide the name of your project.
+  validator: >-
+    {% if not project_name %} You must provide a name for the project. {% endif
+    %}
+
+pip_name:
+  type: str
+  help: The Python package import name (for `import NAME` in Python code)
+  default: "{{ project_name|lower|replace('-', '_')|replace(' ', '_') }}"
+
+org:
+  type: str
+  help: What GitHub user is this project under?
+  validator: >-
+    {% if not org %} You must provide a org for the project. It might just be
+    your user name on the site (like GitHub) you are targeting. {% endif %}
+
+url:
+  type: str
+  help: Provide/modify the url to your GitHub repository if needed.
+  default: "https://github.com/{{org}}/{{project_name}}"
+
+full_name:
+  type: str
+  help: Who's the main responsible for this code?
+  placeholder: My Name
+  validator: >-
+    {% if not full_name %} You must provide a name (possibly yours) to place in
+    your config files. {% endif %}
+
+email:
+  type: str
+  help: What's their email?
+  placeholder: me@email.com
+  validator: >-
+    {% if not email %} You must provide an email (possibly yours) to place in
+    your config files, as required by PyPI. {% endif %}
+
+project_short_description:
+  type: str
+  help: Write a short description of your project.
+  default: A great package.
+
+license:
+  type: str
+  help: Select a license
+  choices:
+    - BSD
+    - Apache
+    - MIT
+    - GPL
+
+backend:
+  type: str
+  help: Choose a build backend for your project
+  choices:
+    "Setuptools  - Standard tooling based around pyproject.toml. (recommended)": setuptools
+    "Hatchling   - As above, but can also interface with hatch. (recommended)": hatch
+    "Poetry      - All-in-one solution to development.": poetry
+
+python_version_range:
+  type: str
+  help: What Python version range does your project support?
+  default: ">=3.8"
+
+typing:
+  type: str
+  help: Would you like to use static type checking? (This configures mypy.)
+  choices:
+    "No": no_typing
+    "Basic type checking (type annotations not required)": loose
+    "Full type checking (type annotations required)": strict
