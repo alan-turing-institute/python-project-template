@@ -17,8 +17,6 @@ You will be prompted for the following information:
 - `project_name`: The name of your project. This will be used to name the
   project directory, the Python package, and the GitHub repository.
 - `project_short_description`: A short description of your project.
-- `pip_name`: The name of your project on PyPI. This should be a valid Python
-  package name.
 - `backend`: The backend to use for dependency management. Here, I've supported the main choices in REG (`setuptools`/`poetry`), as well as `hatch`, which I've been using more recently.
   - [`setuptools`](https://setuptools.readthedocs.io/en/latest/): The default Python packaging tool, configured with `pyproject.toml`.
   - [`hatch`](https://hatch.pypa.io/latest/): An alternative to `setuptools` that's gaining traction in my circles. Almost identical to `setuptools` in terms of config, but with a few extra features.
