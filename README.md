@@ -1,5 +1,7 @@
 # Template for Python projects
 
+## Setting up a project (no need to clone this repo!)
+
 To use, install `copier` in your Python environment:
 
 ```
@@ -31,3 +33,10 @@ You will be prompted for the following information:
 - `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.8`.
 
 Once you've answered all the questions, Copier will generate a new project in the directory you specified. If you're migrating existing code, you should move all your code into the `{{ pip_name }}` directory, and delete the `template` directory.
+
+
+## Inspiration
+
+This template heavily draws upon the [Scientific Python template](https://github.com/scientific-python/cookie) to motivate choices for default options for linters, backends etc. If you haven't worked with any of the tools in this repo (e.g. pre-commit, ruff, mypy, pytest) or want to know more about Python project setup in general, then you'll benefit from reading the fantastic [Scientific Python Development Guidelines](https://learn.scientific-python.org/development/).
+
+It's worth noting that the original template also has support for many more backends, including the use of compiled extensions (e.g. in Rust or C++). The only reason this is not a fork is that I wanted to both simplify the options available, and make the hard switch to [copier](https://copier.readthedocs.io/en/stable/) instead of [cookiecutter](https://cookiecutter.readthedocs.io/en/stable/) as a templating engine, since it lets you [natively update your project in-place to the latest template](https://copier.readthedocs.io/en/stable/updating/), even after you've worked on it for a while.
