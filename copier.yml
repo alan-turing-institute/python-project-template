@@ -12,11 +12,6 @@ project_name:
     {% if not project_name %} You must provide a name for the project. {% endif
     %}
 
-pip_name:
-  type: str
-  help: The Python package import name (for `import NAME` in Python code)
-  default: "{{ project_name|lower|replace('-', '_')|replace(' ', '_') }}"
-
 org:
   type: str
   help: What GitHub user is this project under?
@@ -28,6 +23,12 @@ url:
   type: str
   help: Provide/modify the url to your GitHub repository if needed.
   default: "https://github.com/{{org}}/{{project_name}}"
+
+
+pip_name:
+  type: str
+  help: The Python package import name (for `import NAME` in Python code)
+  default: "{{ project_name|lower|replace('-', '_')|replace(' ', '_') }}"
 
 full_name:
   type: str
@@ -69,7 +70,7 @@ backend:
 
 python_version_range:
   type: str
-  help: What Python version range does your project support?
+  help: What Python version range does your project support? (e.g. ">=3.8", ">=3.10, <3.12" [don't write the quotes])
   default: ">=3.8"
 
 typing:
