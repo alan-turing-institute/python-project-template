@@ -174,6 +174,13 @@ disallow_incomplete_defs = true
 {%- endif %}
 
 [tool.ruff]
+src = ["src"]
+exclude = []
+{%- if backend in ["setuptools", "poetry"] %}
+target-version = "py38"
+{%- endif %}
+
+[tool.ruff.lint]
 select = [
   "E", "F", "W", # flake8
   "B",           # flake8-bugbear
@@ -196,18 +203,13 @@ select = [
   "YTT",         # flake8-2020
   "EXE",         # flake8-executable
 ]
-extend-ignore = [
+ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
 ]
-{% if backend == "poetry" -%}
-target-version = "py38"
-{%- endif %}
-src = ["src"]
 unfixable = [
-  "F841", # Would remove unused variables
+  "F841",   # Would remove unused variables
 ]
-exclude = []
 flake8-unused-arguments.ignore-variadic-names = true
 {% if typing != "no_typing" -%}
 isort.required-imports = ["from __future__ import annotations"]
