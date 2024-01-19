@@ -49,7 +49,7 @@ pytest
 Use pytest-cov to generate coverage reports:
 
 ```bash
-pytest --cov={{ pip_name }}
+pytest --cov={{ python_name }}
 ```
 
 # Pre-commit

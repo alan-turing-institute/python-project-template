@@ -63,7 +63,7 @@ dev = ["pytest", "pytest-cov"]
 [project]
 name = "{{ project_name }}"
 {%- if backend == "setuptools" %}
-version = "0.1.0"  # need to also update version in src/{{ pip_name }}/__init__.py
+version = "0.1.0"  # need to also update version in src/{{ python_name }}/__init__.py
 {%- endif %}
 authors = [
   { name = "{{ full_name }}", email = "{{ email }}" },
@@ -99,7 +99,7 @@ classifiers = [
 {%- endif %}
 ]
 {% if backend == "hatch" -%}
-dynamic = ["version"]  # version is set in src/{{ pip_name }}/__init__.py
+dynamic = ["version"]  # version is set in src/{{ python_name }}/__init__.py
 {%- endif %}
 dependencies = []
 
@@ -121,7 +121,7 @@ Changelog = "{{ url }}/releases"
 
 
 [tool.hatch]
-version.path = "src/{{ pip_name  }}/__init__.py"
+version.path = "src/{{ python_name  }}/__init__.py"
 envs.default.dependencies = [
   "pytest",
   "pytest-cov",
@@ -143,7 +143,7 @@ testpaths = [
 
 
 [tool.coverage]
-run.source = ["{{ pip_name }}"]
+run.source = ["{{ python_name }}"]
 port.exclude_lines = [
   'pragma: no cover',
   '\.\.\.',
@@ -168,7 +168,7 @@ enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 
 [[tool.mypy.overrides]]
-module = "{{ pip_name }}.*"
+module = "{{ python_name }}.*"
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 {%- endif %}
