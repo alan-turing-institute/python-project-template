@@ -9,7 +9,7 @@
 ## Installation
 
 ```bash
-python -m pip install {{ pip_name }}
+python -m pip install {{ python_name }}
 ```
 
 From source:
