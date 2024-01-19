@@ -1,4 +1,6 @@
-
+{%- if coc == "their_coc" -%}
+File was automatically generated, please fill me in (or raise an issue on this repo if you see me blank!)
+{%- elif coc == "our_coc" -%}
 # Code of Conduct
 
 We value the participation of every member of our community and want to ensure 
@@ -46,4 +48,5 @@ Modify the following sections to the needs of your project.
 
 This Code of Conduct is adapted from the [Turing Data Stories Code of Conduct](https://github.com/alan-turing-institute/TuringDataStories/blob/main/CODE_OF_CONDUCT.md) which is based on the [scona project Code of Conduct](https://github.com/WhitakerLab/scona/blob/master/CODE_OF_CONDUCT.md) 
 and the [Contributor Covenant](https://www.contributor-covenant.org), version [1.4](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html)
+{%- endif -%}
 
