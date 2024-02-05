@@ -43,8 +43,10 @@ email:
   help: What's their email?
   placeholder: me@email.com
   validator: >-
-    {% if not email %} You must provide an email (possibly yours) to place in
-    your config files, as required by PyPI. {% endif %}
+    {% if not (email | regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
+    You must provide a valid email to place in
+    your config files.
+    {% endif %}
 
 project_short_description:
   type: str
@@ -77,7 +79,7 @@ typing:
   type: str
   help: Would you like to use static type checking? (This configures mypy.)
   choices:
-    "No": no_typing
+    "No/I'll add it myself.": no_typing
     "Basic type checking (type annotations not required).": loose
     "Full type checking (type annotations required).": strict
 
