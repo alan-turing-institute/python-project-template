@@ -62,9 +62,6 @@ dev = ["pytest", "pytest-cov"]
 {%- else %}
 [project]
 name = "{{ project_name }}"
-{%- if backend == "setuptools" %}
-version = "0.1.0"  # need to also update version in src/{{ python_name }}/__init__.py
-{%- endif %}
 authors = [
   { name = "{{ full_name }}", email = "{{ email }}" },
 ]
@@ -98,11 +95,13 @@ classifiers = [
   "Typing :: Typed",
 {%- endif %}
 ]
-{% if backend == "hatch" -%}
 dynamic = ["version"]  # version is set in src/{{ python_name }}/__init__.py
-{%- endif %}
 dependencies = []
 
+{%- if backend == "setuptools" %}
+[tool.setuptools.dynamic]
+version = {attr = "{{ python_name }}.__version__"}  # version taken from src/{{ python_name }}/__init__.py
+{%- endif %}
 [project.optional-dependencies]
 test = [
   "pytest >=6",
