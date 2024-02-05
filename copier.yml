@@ -24,7 +24,6 @@ url:
   help: Provide/modify the url to your GitHub repository if needed.
   default: "https://github.com/{{org}}/{{project_name}}"
 
-
 python_name:
   type: str
   help: The Python package import name (for `import NAME` in Python code)
@@ -43,10 +42,9 @@ email:
   help: What's their email?
   placeholder: me@email.com
   validator: >-
-    {% if not (email | regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
-    You must provide a valid email to place in
-    your config files.
-    {% endif %}
+    {% if not (email |
+    regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'))
+    %} You must provide a valid email to place in your config files. {% endif %}
 
 project_short_description:
   type: str
@@ -72,7 +70,9 @@ backend:
 
 python_version_range:
   type: str
-  help: What Python version range does your project support? (e.g. ">=3.8", ">=3.10, <3.12" [don't write the quotes])
+  help:
+    What Python version range does your project support? (e.g. ">=3.8", ">=3.10,
+    <3.12" [don't write the quotes])
   default: ">=3.8"
 
 typing:
@@ -82,4 +82,3 @@ typing:
     "No/I'll add it myself.": no_typing
     "Basic type checking (type annotations not required).": loose
     "Full type checking (type annotations required).": strict
-

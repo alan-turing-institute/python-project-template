@@ -12,23 +12,25 @@
 python -m pip install {{ python_name }}
 ```
 
-From source:
-{% if backend == "poetry" -%}
-```bash 
+From source: {% if backend == "poetry" -%}
+
+```bash
 git clone {{ url }}
 cd {{ project_name }}
 poetry install
 ```
+
 {% else -%}
+
 ```bash
 git clone {{ url }}
 cd {{ project_name }}
 python -m pip install .
 ```
+
 {%- endif %}
 
 ## Usage
-
 
 ## Contributing
 
@@ -37,7 +39,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for instructions on how to contribute.
 ## License
 
 Distributed under the terms of the [{{ license }} license](LICENSE).
-
 
 <!-- prettier-ignore-start -->
 [actions-badge]:            {{url}}/workflows/CI/badge.svg
