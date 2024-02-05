@@ -43,10 +43,10 @@ email:
   help: What's their email?
   placeholder: me@email.com
   validator: >-
-    {% if not author_email or not (author_email | regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
-    author_email must be a valid email address.
+    {% if not (email | regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
     You must provide a valid email to place in
-    your config files. {% endif %}
+    your config files.
+    {% endif %}
 
 project_short_description:
   type: str
