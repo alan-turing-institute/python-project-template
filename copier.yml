@@ -78,5 +78,12 @@ typing:
   help: Would you like to use static type checking? (This configures mypy.)
   choices:
     "No": no_typing
-    "Basic type checking (type annotations not required)": loose
-    "Full type checking (type annotations required)": strict
+    "Basic type checking (type annotations not required).": loose
+    "Full type checking (type annotations required).": strict
+
+coc:
+  type: str
+  help: We provide a basic Code of Conduct that can be modified to suit the needs of your project. Would you like to use this, or write your own?
+  choices:
+    "I'll use/modify the basic Code of Conduct.": our_coc
+    "I'll write my own Code of Conduct.": their_coc
