@@ -176,10 +176,10 @@ disallow_incomplete_defs = true
 [tool.ruff]
 src = ["src"]
 exclude = []
-{%- if backend in ["setuptools", "poetry"] %}
-target-version = "py38"
-{%- endif %}
 
+[tool.ruff.format]
+line-length = 88  # how long you want lines to be
+docstring-code-format = true  # code snippets in docstrings will be formatted
 [tool.ruff.lint]
 select = [
   "E", "F", "W", # flake8
@@ -195,7 +195,6 @@ select = [
   "PIE",         # flake8-pie
   "PL",          # pylint
   "PT",          # flake8-pytest-style
-  "PTH",         # flake8-use-pathlib
   "RET",         # flake8-return
   "RUF",         # Ruff-specific
   "SIM",         # flake8-simplify
@@ -205,12 +204,13 @@ select = [
 ]
 ignore = [
   "PLR",    # Design related pylint codes
-  "E501",   # Line too long
+  "ISC001", # Conflicts with formatter
 ]
 unfixable = [
+  "F840",   # Would remove unused imports 
   "F841",   # Would remove unused variables
 ]
-flake8-unused-arguments.ignore-variadic-names = true
+flake8-unused-arguments.ignore-variadic-names = true  # allow unused *args/**kwargs
 {% if typing != "no_typing" -%}
 isort.required-imports = ["from __future__ import annotations"]
 {%- endif %}
