@@ -78,5 +78,6 @@ typing:
   help: Would you like to use static type checking? (This configures mypy.)
   choices:
     "No": no_typing
-    "Basic type checking (type annotations not required)": loose
-    "Full type checking (type annotations required)": strict
+    "Basic type checking (type annotations not required).": loose
+    "Full type checking (type annotations required).": strict
+
