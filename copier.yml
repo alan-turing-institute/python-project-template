@@ -70,16 +70,20 @@ backend:
     "Hatchling   - As above, but can also interface with hatch. (recommended)": hatch
     "Poetry      - All-in-one solution to development.": poetry
 
-python_version_range:
+min_python_version:
   type: str
-  help: What Python version range does your project support? (e.g. ">=3.8", ">=3.10, <3.12" [don't write the quotes])
-  default: ">=3.8"
+  help: What is the minimum version of Python your project will support? (Defaults to minimum supported by NumPy)
+  default: "3.10"
+  validator: >-
+    {% if not (min_python_version | regex_search('[3][.][0-9]+')) %}
+    Please supply a valid Python 3 version (e.g. 3.11).
+    {% endif %}
 
 typing:
   type: str
   help: Would you like to use static type checking? (This configures mypy.)
   choices:
-    "No/I'll add it myself.": no_typing
+    "No/I'll configure it myself.": no_typing
     "Basic type checking (type annotations not required).": loose
     "Full type checking (type annotations required).": strict
 
