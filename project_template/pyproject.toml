@@ -10,7 +10,6 @@ requires = ["poetry_core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 {%- endif %}
 
-
 {%- if backend == "poetry" %}
 [tool.poetry]
 name = "{{ project_name }}"
@@ -44,7 +43,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = {{ python_version_range }}
+python = ">={{ min_python_version }}"
 
 pytest = { version = ">=6", optional = true }
 pytest-cov = { version = ">=3", optional = true }
@@ -57,25 +56,20 @@ pytest-cov = ">= 3"
 test = ["pytest", "pytest-cov"]
 dev = ["pytest", "pytest-cov"]
 
-
-
 {%- else %}
 [project]
 name = "{{ project_name }}"
-{%- if backend == "setuptools" %}
-version = "0.1.0"  # need to also update version in src/{{ python_name }}/__init__.py
-{%- endif %}
 authors = [
   { name = "{{ full_name }}", email = "{{ email }}" },
 ]
 description = "{{ project_short_description }}"
 readme = "README.md"
-requires-python = "{{ python_version_range }}"
+requires-python = ">={{ min_python_version }}"
 classifiers = [
   "Development Status :: 1 - Planning",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
-{%- if license == "BSD" %}  
+{%- if license == "BSD" %}
   "License :: OSI Approved :: BSD License",
 {%- elif license == "Apache" %}
   "License :: OSI Approved :: Apache Software License",
@@ -88,7 +82,6 @@ classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -98,11 +91,13 @@ classifiers = [
   "Typing :: Typed",
 {%- endif %}
 ]
-{% if backend == "hatch" -%}
 dynamic = ["version"]  # version is set in src/{{ python_name }}/__init__.py
-{%- endif %}
 dependencies = []
 
+{%- if backend == "setuptools" %}
+[tool.setuptools.dynamic]
+version = {attr = "{{ python_name }}.__version__"}
+{%- endif %}
 [project.optional-dependencies]
 test = [
   "pytest >=6",
@@ -119,14 +114,14 @@ Homepage = "{{ url }}"
 Discussions = "{{ url }}/discussions"
 Changelog = "{{ url }}/releases"
 
-
+{%- if backend == "hatch" %}
 [tool.hatch]
 version.path = "src/{{ python_name  }}/__init__.py"
 envs.default.dependencies = [
   "pytest",
   "pytest-cov",
 ]
-
+{%- endif %}
 {%- endif %}
 
 [tool.pytest.ini_options]
@@ -141,7 +136,6 @@ testpaths = [
   "tests",
 ]
 
-
 [tool.coverage]
 run.source = ["{{ python_name }}"]
 port.exclude_lines = [
@@ -150,11 +144,10 @@ port.exclude_lines = [
   'if typing.TYPE_CHECKING:',
 ]
 
-
 {% if typing != "no_typing" -%}
 [tool.mypy]
 files = ["src", "tests"]
-python_version = "3.8"
+python_version = "{{ min_python_version }}"
 show_error_codes = true
 warn_unreachable = true
 disallow_untyped_defs = false
@@ -166,7 +159,6 @@ strict = false
 strict = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
-
 [[tool.mypy.overrides]]
 module = "{{ python_name }}.*"
 disallow_untyped_defs = true
@@ -175,6 +167,14 @@ disallow_incomplete_defs = true
 {%- endif %}
 
 [tool.ruff]
+src = ["src"]
+exclude = []
+line-length = 88  # how long you want lines to be
+
+[tool.ruff.format]
+docstring-code-format = true  # code snippets in docstrings will be formatted
+
+[tool.ruff.lint]
 select = [
   "E", "F", "W", # flake8
   "B",           # flake8-bugbear
@@ -189,7 +189,6 @@ select = [
   "PIE",         # flake8-pie
   "PL",          # pylint
   "PT",          # flake8-pytest-style
-  "PTH",         # flake8-use-pathlib
   "RET",         # flake8-return
   "RUF",         # Ruff-specific
   "SIM",         # flake8-simplify
@@ -197,19 +196,15 @@ select = [
   "YTT",         # flake8-2020
   "EXE",         # flake8-executable
 ]
-extend-ignore = [
+ignore = [
   "PLR",    # Design related pylint codes
-  "E501",   # Line too long
+  "ISC001", # Conflicts with formatter
 ]
-{% if backend == "poetry" -%}
-target-version = "py38"
-{%- endif %}
-src = ["src"]
 unfixable = [
-  "F841", # Would remove unused variables
+  "F401",   # Would remove unused imports
+  "F841",   # Would remove unused variables
 ]
-exclude = []
-flake8-unused-arguments.ignore-variadic-names = true
+flake8-unused-arguments.ignore-variadic-names = true  # allow unused *args/**kwargs
 {% if typing != "no_typing" -%}
 isort.required-imports = ["from __future__ import annotations"]
 {%- endif %}

@@ -29,9 +29,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8, 3.12]     
-        runs-on: [ubuntu-latest]  # can be extended to other OSes, e.g. macOS/Windows if needed
-        
+        python-version: [{{ min_python_version }}, 3.12]  # test oldest and latest supported versions
+        runs-on: [ubuntu-latest]  # can be extended to other OSes, e.g. [ubuntu-latest, macos-latest]
+
     steps:
       - uses: actions/checkout@v4
         with:
