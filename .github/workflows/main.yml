@@ -1,0 +1,40 @@
+name: Test Template Instance
+
+on:
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  Creation:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.9"
+      - name: Install Dependencies
+        run: |
+          pip install copier pre-commit
+      - name: Create copy
+        run: |
+          copier copy \
+            -d project_name=test \
+            -d org=gh_actions \
+            -d full_name=gh_actions \
+            -d email=foo@example.com \
+            -d license=BSD \
+            -d backend=setuptools \
+            -d typing=strict \
+            -d coc=our_coc \
+            project_template instance
+      - name: linting
+        run: |
+          cd instance
+          pre-commit run --all
+      - name: project-install
+        run: pip install .
