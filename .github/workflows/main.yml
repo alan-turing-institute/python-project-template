@@ -12,15 +12,16 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v3
+     - uses: actions/checkout@v4
         with:
-          python-version: "3.9"
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
       - name: Install Dependencies
         run: |
           pip install copier pre-commit
-      - name: Create copy
+      - name: Create new project
         run: |
           copier copy \
             -d project_name=test \
@@ -35,6 +36,6 @@ jobs:
       - name: linting
         run: |
           cd instance
-          pre-commit run --all
-      - name: project-install
-        run: pip install .
+          pre-commit run --all-files
+      - name: Check project installs (with -e)
+        run: pip install -e .
