@@ -48,7 +48,8 @@ jobs:
           git config --global user.email "foo@example.com"
           git config --global user.name "gh_actions"
           git init
-          git commit -am "Initial commit"
+          git add .
+          git commit -m "Initial commit"
           cat .pre-commit-config.yaml
           pre-commit run --all-files
           pip install -e .
