@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  Creation:
+  test-project-creation:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -40,11 +40,11 @@ jobs:
             -d coc=our_coc \
             --vcs-ref HEAD \
             . my-project
-      - name: Check generated project passes pre-commit
+      - name: Check generated project passes pre-commit and installs with pip
         run: |
           cd my-project 
           git init
+          git commit -am "Initial commit"
           cat .pre-commit-config.yaml
           pre-commit run --all-files
-      - name: Check project installs (with -e)
-        run: pip install -e .
+          pip install -e .
