@@ -32,7 +32,7 @@ jobs:
             -d backend=setuptools \
             -d typing=strict \
             -d coc=our_coc \
-            project_template instance
+            . instance
       - name: linting
         run: |
           cd instance
