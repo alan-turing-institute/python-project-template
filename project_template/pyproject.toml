@@ -59,6 +59,7 @@ dev = ["pytest", "pytest-cov"]
 {%- else %}
 [project]
 name = "{{ project_name }}"
+version = "0.1.0"
 authors = [
   { name = "{{ full_name }}", email = "{{ email }}" },
 ]
@@ -91,13 +92,8 @@ classifiers = [
   "Typing :: Typed",
 {%- endif %}
 ]
-dynamic = ["version"]  # version is set in src/{{ python_name }}/__init__.py
 dependencies = []
 
-{%- if backend == "setuptools" %}
-[tool.setuptools.dynamic]
-version = {attr = "{{ python_name }}.__version__"}
-{%- endif %}
 [project.optional-dependencies]
 test = [
   "pytest >=6",
@@ -116,7 +112,6 @@ Changelog = "{{ url }}/releases"
 
 {%- if backend == "hatch" %}
 [tool.hatch]
-version.path = "src/{{ python_name  }}/__init__.py"
 envs.default.dependencies = [
   "pytest",
   "pytest-cov",
