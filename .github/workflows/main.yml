@@ -36,7 +36,7 @@ jobs:
       - name: linting
         run: |
           cd instance
-          cat .pre-commit-config
+          cat .pre-commit-config.yaml
           pre-commit run --all-files
       - name: Check project installs (with -e)
         run: pip install -e .
