@@ -8,9 +8,12 @@ on:
 
 jobs:
   test-project-creation:
+    name: Test project creation with    ${{ matrix.backend }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        backend: [setuptools, hatch, poetry]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,7 +23,6 @@ jobs:
           python-version: "3.x"
       - name: Install Dependencies
         run: |
-          set -eux
           pip install copier pre-commit
       - name: Create new project
         run: |
@@ -42,7 +44,9 @@ jobs:
             . my-project
       - name: Check generated project passes pre-commit and installs with pip
         run: |
-          cd my-project 
+          cd my-project
+          git config --global user.email "foo@example.com"
+          git config --global user.name "gh_actions"
           git init
           git commit -am "Initial commit"
           cat .pre-commit-config.yaml
