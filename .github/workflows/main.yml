@@ -27,7 +27,7 @@ jobs:
           mkdir my-project
           copier copy \
             -d project_name=test \
-            -d project_short_description=A great package. \
+            -d project_short_description="A great package." \
             -d url=https://github.com/gh_actions/test \
             -d min_python_version=3.10 \
             -d org=gh_actions \
