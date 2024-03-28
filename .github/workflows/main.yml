@@ -20,11 +20,16 @@ jobs:
           python-version: "3.x"
       - name: Install Dependencies
         run: |
+          set -eux
           pip install copier pre-commit
       - name: Create new project
         run: |
+          mkdir my-project
           copier copy \
             -d project_name=test \
+            -d project_short_description=A great package. \
+            -d url=https://github.com/gh_actions/test \
+            -d min_python_version=3.10 \
             -d org=gh_actions \
             -d full_name=gh_actions \
             -d email=foo@example.com \
@@ -32,10 +37,12 @@ jobs:
             -d backend=setuptools \
             -d typing=strict \
             -d coc=our_coc \
-            . instance
-      - name: linting
+            --vcs-ref HEAD \
+            . my-project
+      - name: Check generated project passes pre-commit
         run: |
-          cd instance
+          cd my-project 
+          git init
           cat .pre-commit-config.yaml
           pre-commit run --all-files
       - name: Check project installs (with -e)
