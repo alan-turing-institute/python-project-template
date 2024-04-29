@@ -11,7 +11,7 @@ pip install copier
 Then, run the following command to start the template configuration:
 
 ```
-copier copy gh:alan-turing-institute/python-project-template /path/to/your/project
+copier copy gh:alan-turing-institute/python-project-template my-package-name
 ```
 
 You will be prompted for the following information:
