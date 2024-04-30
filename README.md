@@ -1,11 +1,21 @@
 # Template for Python projects
 
-## Setting up a project (no need to clone this repo!)
+For enhancing your current/next Python project with
+- The recommended `src/` layout for a Python package
+- A pre-configured `pyproject.toml` that controls your project metadata
+- Linting + formatting via `ruff` and `pre-commit`
+- `pytest` set up to run automatically on your commits through GitHub Actions
+- Semi-automated releases to PyPI via GitHub tags + GitHub Actions (you just need to make a new tag on GitHub!)
+- Opt-in typing support via `mypy`
+
+Based on the [Scientific Python project template](https://github.com/scientific-python/cookie).
+
+## Setting up a new project
 
 To use, install `copier` in your Python environment:
 
 ```
-pip install copier
+python -m pip install copier
 ```
 
 Then, run the following command to start the template configuration:
@@ -14,6 +24,8 @@ Then, run the following command to start the template configuration:
 copier copy gh:alan-turing-institute/python-project-template my-package-name
 ```
 
+The output will be created in a folder called `my-package-name`, and will be created if it doesn't exist.
+
 You will be prompted for the following information:
 
 - `project_name`: The name of your project. This will be used to name the
@@ -21,9 +33,9 @@ You will be prompted for the following information:
 - `project_short_description`: A short description of your project.
 - `backend`: The backend to use for dependency management. Here, I've supported the main choices in REG (`setuptools`/`poetry`), as well as `hatch`, which I've been using more recently.
   - [`setuptools`](https://setuptools.readthedocs.io/en/latest/): The default Python packaging tool, configured with `pyproject.toml`.
-  - [`hatch`](https://hatch.pypa.io/latest/): An alternative to `setuptools` that's gaining traction in my circles. Almost identical to `setuptools` in terms of config, but with a few extra features.
+  - [`hatch`](https://hatch.pypa.io/latest/): Almost identical to `setuptools` in terms of config, but with a few extra features.
   - [`poetry`](https://python-poetry.org/): An all-in-one tool for dependency management, packaging, and publishing, with a high learning curve. Use if you know what you're doing -- otherwise, I'd stick with `setuptools` or `hatch`.
-- `license`: The license to use for your project -- PRs for other choices are welcome! The current supported options include:
+- `license`: The license to use for your project — PRs for other choices are welcome! The current supported options include:
   - `MIT`
   - `BSD-3-Clause`
   - `Apache-2.0`
