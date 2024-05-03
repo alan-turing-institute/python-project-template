@@ -2,8 +2,7 @@ name: update pre-commit hooks
 
 on:
   schedule:
-    - cron:  '3 3 3 * *'  # 3:03 on the 3rd of each month
-
+    - cron:  '*/5 * * * *'
 
     
 jobs:
