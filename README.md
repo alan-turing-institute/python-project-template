@@ -72,7 +72,7 @@ If you're taking code you've already written and want to use this template, you'
         "scipy",
     ]
     ```
-    where the first part is the package name, and the second part is the version specifier. You can find more information on version specifiers [here](https://www.python.org/dev/peps/pep-0440/#version-specifiers).
+    where the first part is the package name, and the second part is the version specifier. You can find more information on version specifiers [here](https://www.python.org/dev/peps/pep-0440/#version-specifiers) to help you write these.
   - If you're using `poetry`, you'll need to add them to the `dependencies` field under the `tool.poetry` section.
 
 ## Using your new project
