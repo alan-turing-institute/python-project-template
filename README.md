@@ -77,7 +77,38 @@ If you're taking code you've already written and want to use this template, you'
 
 ## Using your new project
 
-Once you've set up your new project, you can start developing your package. The workflow for this template will look something like this:
+Once you've set up your new project, you can start developing your package. There are some guidelines for development included in the [`CONTRIBUTING.md`](project_template/CONTRIBUTING.md) file generated in your project, but the main things are repeated here for completeness.
+
+### Python environment
+
+Every project should have a Python environment set up to manage dependencies. `poetry` has its own virtual environment management, but if you're using `setuptools` or `hatch`, you can use `venv` to create a new environment (called .venv by default) in the root of your project. To do this, run the following command in your terminal from the root of your project:
+
+```
+python -m venv .venv
+```
+
+Then, activate the environment:
+
+- On Windows:
+
+  ```
+  .venv\Scripts\activate
+  ```
+
+- On Unix or MacOS:
+  ```
+  source .venv/bin/activate
+  ```
+
+I would also recommend upgrading `pip` and `setuptools` in your environment to the latest versions:
+
+```
+pip install --upgrade pip setuptools
+```
+
+There's also the environment manager [`uv`](https://astral.sh/uv), which has gained a lot of traction through being really fast, including some fun extras (e.g. [this one](https://twitter.com/HenrySchreiner3/status/1788801151686631584) that could save your old projects that no longer work with newer package versions).
+
+The workflow for this template will look something like this:
 
 - Make changes to your code in the `src/{{ python_name }}` directory.
 
