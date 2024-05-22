@@ -1,6 +1,7 @@
 # Template for Python projects
 
 For enhancing your current/next Python project with
+
 - The recommended `src/` layout for a Python package
 - A pre-configured `pyproject.toml` that controls your project metadata
 - Linting + formatting via `ruff` and `pre-commit`
@@ -10,6 +11,13 @@ For enhancing your current/next Python project with
 
 Based on the [Scientific Python project template](https://github.com/scientific-python/cookie).
 
+## Sections in this README
+
+- [Setting up a new project](#setting-up-a-new-project)
+- [Using your new project](#using-your-new-project)
+- [Migrating an existing project](#migrating-an-existing-project)
+- [Inspiration](#inspiration)
+
 ## Setting up a new project
 
 To use, install `copier` in your Python environment:
@@ -18,7 +26,7 @@ To use, install `copier` in your Python environment:
 python -m pip install copier
 ```
 
-Then, run the following command to start the template configuration:
+Then, run the following command to start the template configuration (but replace `my-package-name` with the name of your package):
 
 ```
 copier copy gh:alan-turing-institute/python-project-template my-package-name
@@ -42,10 +50,36 @@ You will be prompted for the following information:
   - `GPL-3.0`
 - `python_name`: The name of your project when you do `import name` (and potentially `pip install name`). This should be a valid Python package name (use underscores instead of hyphens, for example).
 - `typing`: Whether to use `mypy` for type checking. If you're not sure, I'd recommend basic checks (second option).
-- `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.8`.
+- `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.10`.
 
-Once you've answered all the questions, Copier will generate a new project in the directory you specified. If you're migrating existing code, you should move all your code into the `src/{{ python_name }}` directory, and delete the `template` directory.
+Great! Copier will have now created a new project in the directory you specified by replacing `my-package-name`, and customized it based on the information you provided.
 
+### Migrating an existing project
+
+If you're taking code you've already written and want to use this template, you'll need to perform the following steps:
+
+- Start by moving your library code into the `src/{{ python_name }}` directory.
+  - By library code, I mean the code that you want to be importable by other Python code. If you have things like experiments, scripts, or notebooks, you should keep them in the root directory under a different name (e.g. `examples`, `notebooks` etc.)
+- Copy over any tests you have into the `tests` directory.
+- Go through the `pyproject.toml` file and make sure that the metadata is correct. This includes the `name`, `description`, `version`, `authors`, `license`, and `classifiers` fields.
+- Add your dependencies to the relevant section of the `pyproject.toml` file.
+  - If you're using `setuptools` or `hatch`, you'll need to add them to the `install_requires` field. Dependencies are formatted like this:
+    ```
+    [project]
+    install_requires = [
+        "numpy >= 1.20",
+        "pandas == 1.2.3",
+        "scipy",
+    ]
+    ```
+    where the first part is the package name, and the second part is the version specifier. You can find more information on version specifiers [here](https://www.python.org/dev/peps/pep-0440/#version-specifiers).
+  - If you're using `poetry`, you'll need to add them to the `dependencies` field under the `tool.poetry` section.
+
+## Using your new project
+
+Once you've set up your new project, you can start developing your package. The workflow for this template will look something like this:
+
+- Make changes to your code in the `src/{{ python_name }}` directory.
 
 ## Inspiration
 
