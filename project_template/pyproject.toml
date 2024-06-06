@@ -95,13 +95,10 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-test = [
-  "pytest >=6",
-  "pytest-cov >=3",
-]
 dev = [
   "pytest >=6",
   "pytest-cov >=3",
+  "pre-commit",
 ]
 
 [project.urls]
