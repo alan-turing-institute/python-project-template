@@ -1,11 +1,6 @@
 [build-system]
-{%- if backend == "hatch" %}
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-{%- elif backend == "setuptools" %}
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
-{%- endif %}
 
 {%- if license == "BSD" %}
 license = "BSD-3-Clause"
@@ -82,14 +77,6 @@ Homepage = "{{ url }}"
 "Bug Tracker" = "{{ url }}/issues"
 Discussions = "{{ url }}/discussions"
 Changelog = "{{ url }}/releases"
-
-{%- if backend == "hatch" %}
-[tool.hatch]
-envs.default.dependencies = [
-  "pytest",
-  "pytest-cov",
-]
-{%- endif %}
 
 [tool.pytest.ini_options]
 minversion = "6.0"

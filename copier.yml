@@ -24,7 +24,6 @@ url:
   help: Provide/modify the url to your GitHub repository if needed.
   default: "https://github.com/{{org}}/{{project_name}}"
 
-
 python_name:
   type: str
   help: The Python package import name (for `import NAME` in Python code)
@@ -61,14 +60,6 @@ license:
     - Apache
     - MIT
     - GPL
-
-backend:
-  type: str
-  help: Choose a build backend for your project
-  choices:
-    "Setuptools  - Standard tooling based around pyproject.toml. (recommended)": setuptools
-    "Hatchling   - As above, but can also interface with hatch. (recommended)": hatch
-    "Poetry      - All-in-one solution to development.": poetry
 
 min_python_version:
   type: str
