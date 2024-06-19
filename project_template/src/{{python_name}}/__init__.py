@@ -1,6 +1,7 @@
 """
 {{ project_name }}: {{ project_short_description }}
 """
+
 from __future__ import annotations
 
 from importlib.metadata import version

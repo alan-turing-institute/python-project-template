@@ -1,16 +1,21 @@
 [build-system]
-requires = ["setuptools>=61"]
-build-backend = "setuptools.build_meta"
+
 
 {%- if license == "BSD" %}
-license = "BSD-3-Clause"
+
 {%- elif license == "Apache" %}
-license = "Apache-2.0"
+
 {%- elif license == "MIT" %}
-license = "MIT"
+
 {%- elif license == "GPL" %}
-license = "GPL-3.0-or-later"
+
 {%- endif %}
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+license = "BSD-3-Clause"
+license = "Apache-2.0"
+license = "MIT"
+license = "GPL-3.0-or-later"
 description = "{{ project_short_description }}"
 readme = "README.md"
 
@@ -26,14 +31,6 @@ classifiers = [
 ]
 
 [project]
-name = "{{ project_name }}"
-version = "0.1.0"
-authors = [
-  { name = "{{ full_name }}", email = "{{ email }}" },
-]
-description = "{{ project_short_description }}"
-readme = "README.md"
-requires-python = ">={{ min_python_version }}"
 classifiers = [
   "Development Status :: 1 - Planning",
   "Intended Audience :: Science/Research",
@@ -59,18 +56,17 @@ classifiers = [
 {%- if typing != "no_typing" %}
   "Typing :: Typed",
 {%- endif %}
-]
+]name = "{{ project_name }}"
+version = "0.1.0"
+authors = [{ name = "{{ full_name }}", email = "{{ email }}" }]
+description = "{{ project_short_description }}"
+readme = "README.md"
+requires-python = ">={{ min_python_version }}"
 dependencies = []
 
 [project.optional-dependencies]
-test = [
-  "pytest >=6",
-  "pytest-cov >=3",
-]
-dev = [
-  "pytest >=6",
-  "pytest-cov >=3",
-]
+test = ["pytest >=6", "pytest-cov >=3"]
+dev = ["pytest >=6", "pytest-cov >=3"]
 
 [project.urls]
 Homepage = "{{ url }}"
@@ -82,24 +78,21 @@ Changelog = "{{ url }}/releases"
 minversion = "6.0"
 addopts = ["-ra", "--showlocals", "--strict-markers", "--strict-config"]
 xfail_strict = true
-filterwarnings = [
-  "error",
-]
+filterwarnings = ["error"]
 log_cli_level = "INFO"
-testpaths = [
-  "tests",
-]
+testpaths = ["tests"]
 
 [tool.coverage]
-run.source = ["{{ python_name }}"]
-port.exclude_lines = [
-  'pragma: no cover',
-  '\.\.\.',
-  'if typing.TYPE_CHECKING:',
-]
+
 
 {% if typing != "no_typing" -%}
+run.source = ["{{ python_name }}"]
+port.exclude_lines = ['pragma: no cover', '\.\.\.', 'if typing.TYPE_CHECKING:']
 [tool.mypy]
+
+{% if typing == "loose" -%}
+
+{% elif typing == "strict" -%}
 files = ["src", "tests"]
 python_version = "{{ min_python_version }}"
 show_error_codes = true
@@ -107,58 +100,61 @@ warn_unreachable = true
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 check_untyped_defs = true
-{% if typing == "loose" -%}
 strict = false
-{% elif typing == "strict" -%}
 strict = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 [[tool.mypy.overrides]]
+
+{%- endif %}
+{%- endif %}
+
 module = "{{ python_name }}.*"
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
-{%- endif %}
-{%- endif %}
-
 [tool.ruff]
 src = ["src"]
 exclude = []
-line-length = 88  # how long you want lines to be
+line-length = 88 # how long you want lines to be
 
 [tool.ruff.format]
-docstring-code-format = true  # code snippets in docstrings will be formatted
+docstring-code-format = true # code snippets in docstrings will be formatted
 
 [tool.ruff.lint]
+
+{% if typing != "no_typing" -%}
+
+{%- endif %}
 select = [
-  "E", "F", "W", # flake8
-  "B",           # flake8-bugbear
-  "I",           # isort
-  "ARG",         # flake8-unused-arguments
-  "C4",          # flake8-comprehensions
-  "EM",          # flake8-errmsg
-  "ICN",         # flake8-import-conventions
-  "ISC",         # flake8-implicit-str-concat
-  "G",           # flake8-logging-format
-  "PGH",         # pygrep-hooks
-  "PIE",         # flake8-pie
-  "PL",          # pylint
-  "PT",          # flake8-pytest-style
-  "RET",         # flake8-return
-  "RUF",         # Ruff-specific
-  "SIM",         # flake8-simplify
-  "UP",          # pyupgrade
-  "YTT",         # flake8-2020
-  "EXE",         # flake8-executable
+    "E",
+    "F",
+    "W",   # flake8
+    "B",   # flake8-bugbear
+    "I",   # isort
+    "ARG", # flake8-unused-arguments
+    "C4",  # flake8-comprehensions
+    "EM",  # flake8-errmsg
+    "ICN", # flake8-import-conventions
+    "ISC", # flake8-implicit-str-concat
+    "G",   # flake8-logging-format
+    "PGH", # pygrep-hooks
+    "PIE", # flake8-pie
+    "PL",  # pylint
+    "PT",  # flake8-pytest-style
+    "RET", # flake8-return
+    "RUF", # Ruff-specific
+    "SIM", # flake8-simplify
+    "UP",  # pyupgrade
+    "YTT", # flake8-2020
+    "EXE", # flake8-executable
 ]
 ignore = [
-  "PLR",    # Design related pylint codes
-  "ISC001", # Conflicts with formatter
+    "PLR",    # Design related pylint codes
+    "ISC001", # Conflicts with formatter
 ]
 unfixable = [
-  "F401",   # Would remove unused imports
-  "F841",   # Would remove unused variables
+    "F401", # Would remove unused imports
+    "F841", # Would remove unused variables
 ]
-flake8-unused-arguments.ignore-variadic-names = true  # allow unused *args/**kwargs
-{% if typing != "no_typing" -%}
+flake8-unused-arguments.ignore-variadic-names = true # allow unused *args/**kwargs
 isort.required-imports = ["from __future__ import annotations"]
-{%- endif %}
