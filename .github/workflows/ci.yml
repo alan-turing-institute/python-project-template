@@ -37,7 +37,7 @@ jobs:
             -d email=foo@example.com \
             -d license=BSD \
             -d backend=setuptools \
-            -d typing={{ matrix.typing }} \
+            -d typing=${{ matrix.typing }} \
             -d coc=our_coc \
             --vcs-ref HEAD \
             . my-project
@@ -82,7 +82,7 @@ jobs:
             -d email=foo@example.com \
             -d license=BSD \
             -d backend=setuptools \
-            -d typing={{ matrix.typing }} \
+            -d typing=${{ matrix.typing }} \
             -d coc=our_coc \
             --vcs-ref HEAD \
             . my-project
