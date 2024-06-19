@@ -4,7 +4,7 @@ on:
   schedule:
     - cron:  '*/5 3 * * *'
 
-    
+
 jobs:
   update-template:
     if: github.repository == 'alan-turing-institute/python-project-template'
@@ -27,7 +27,7 @@ jobs:
           cd project_template
           pre-commit autoupdate
 
-      - name: Push changes 
+      - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           add_options: '-u'

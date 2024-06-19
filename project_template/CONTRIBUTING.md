@@ -7,18 +7,11 @@ description of best practices for developing scientific packages.
 
 You can set up a development environment by running:
 
-{%- if backend == "poetry" %}
-```zsh
-poetry install
-```
-{%- else %}
-
 ```zsh
 python3 -m venv venv          # create a virtualenv called venv
 source ./venv/bin/activate   # now `python` points to the virtualenv python
 pip install -v -e ".[dev]"    # -v for verbose, -e for editable, [dev] for dev dependencies
 ```
-{%- endif %}
 
 # Post setup
 
