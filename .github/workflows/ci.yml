@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-project-creation:
-    name: Test project creation with    ${{ matrix.backend }}
+    name: Test project creation with ${{ matrix.typing }} typing
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -52,7 +52,7 @@ jobs:
           pip install -e .
 
   format-created-project:
-    name: Test project creation with    ${{ matrix.backend }}
+    name: Try formatting the created project with ${{ matrix.typing }} typing
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
