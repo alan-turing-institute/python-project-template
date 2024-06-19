@@ -159,6 +159,6 @@ unfixable = [
   "F841",   # Would remove unused variables
 ]
 flake8-unused-arguments.ignore-variadic-names = true  # allow unused *args/**kwargs
-{% if typing != "no_typing" -%}
+{%- if typing != "no_typing" -%}
 isort.required-imports = ["from __future__ import annotations"]
 {%- endif %}
