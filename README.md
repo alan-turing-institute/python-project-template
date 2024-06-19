@@ -153,7 +153,7 @@ There's also the environment manager [`uv`](https://astral.sh/uv), which has gai
 
 To install `uv`, [follow the install instructions on the GitHub page](https://github.com/astral-sh/uv?tab=readme-ov-file#getting-started), then run the following command in your terminal from the root of your project:
 
-```
+```bash
 uv venv --seed
 ```
 
@@ -163,18 +163,18 @@ Activating the environment is the same as with `venv`:
 
 - On Windows:
 
-  ```
+  ```bash
   .venv\Scripts\activate
   ```
 
 - On Unix or MacOS:
-  ```
+  ```bash
   source .venv/bin/activate
   ```
 
 Then, to benefit from `uv`'s speed, you install your dependencies with:
 
-```
+```bash
 uv pip install ...  # as you would with pip!
 ```
 
@@ -182,8 +182,8 @@ uv pip install ...  # as you would with pip!
 
 After your environment is set up, you can then install your project in editable mode (so that changes you make to the code are reflected in the installed package) by running:
 
-```
-pip install -e .
+```bash
+pip install -e .  # or uv pip install -e . if you're using uv
 ```
 
 This will install your package in editable mode, so you can import it in other Python code through `import my_package_name` and access methods as if it were any other package. The editable part means that if you make changes to the code in the `src` directory, they will be reflected in the installed package, so your changes will be immediately available to any code that uses your package that you're working on.
@@ -229,12 +229,23 @@ This will run the checks on all files in your git project, regardless of whether
 
 ### Publishing your package
 
-If you're ready to publish your package to [PyPI](https://pypi.org/) (i.e. you want to be able to run `pip install my-package-name` from anywhere), you can do so by following these steps from the [python packaging user guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/#uploading-the-distribution-archives):
+If you're ready to publish your package to [PyPI](https://pypi.org/) (i.e. you want to be able to run `pip install my-package-name` from anywhere), the template includes a GitHub Actions workflow that will automatically publish your package to PyPI when you create a new release on GitHub. The workflow is defined in the [`.github/workflows/cd.yml`](project_template/.github/workflows/cd.yml) file within the `project_template` folder.
+
+First, if you don't already have a PyPI account, we'll follow these first steps from the [python packaging user guide](https://packaging.python.org/en/latest/tutorials/packaging-projects/#uploading-the-distribution-archives):
 
 >The first thing you’ll need to do is register an account on TestPyPI, which is a separate instance of the package index intended for testing and experimentation. It’s great for things like this tutorial where we don’t necessarily want to upload to the real index. To register an account, go to https://test.pypi.org/account/register/ and complete the steps on that page. You will also need to verify your email address before you’re able to upload any packages. For more details, see Using TestPyPI.
 
->To securely upload your project, you’ll need a PyPI API token. Create one at https://test.pypi.org/manage/account/#api-tokens, setting the “Scope” to “Entire account”. Don’t close the page until you have copied and saved the token — you won’t see that token again.
+Notice how the instructions mention TestPyPI, which is a testing environment for PyPI. This is a good place to start, since you can test publishing your package without affecting the real PyPI index. Once you're ready to publish to the real PyPI, you can follow the same steps again — just replace `https://test.pypi.org` with `https://pypi.org`.
 
+We'll then need to set up trusted publishing, which allows us to publish to PyPI without the need for a username/password or API token. This template uses the [PyPA GitHub action for publishing to PyPI](https://github.com/pypa/gh-action-pypi-publish/tree/release/v1.9?tab=readme-ov-file), which gives us the following instructions:
+
+> This action supports PyPI's [trusted publishing](https://docs.pypi.org/trusted-publishers/) implementation, which allows authentication to PyPI without a manually configured API token or username/password combination. To perform trusted publishing with this action, your project's publisher must already be [configured on PyPI](https://docs.pypi.org/trusted-publishers/adding-a-publisher/).
+
+After following these steps, we're basically there! You can now create a new release on GitHub using the "Releases" tab on the right-hand side, and the GitHub Actions workflow will automatically publish your package to PyPI using the commit associated with the release. **Note: you'll need to update the version number in the `pyproject.toml` file before creating a new release, since PyPI won't allow you to publish the same version twice!**
+
+Make sure to follow [semantic versioning](https://semver.org/) when updating the version number. If it's your first version of the package, I'd recommend starting at 0.1.0, with the major release 1.0.0 being the production-ready product. Use minor versions (0.X.0) for breaking changes, and patch versions (0.0.X) for backwards-compatible bug fixes.
+
+If this was your first time publishing, you will then  be able to install your package from PyPI with `pip install my-package-name`. Yay!
 
 
 
