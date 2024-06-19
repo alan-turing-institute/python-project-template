@@ -5,20 +5,8 @@ build-backend = "hatchling.build"
 {%- elif backend == "setuptools" %}
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
-{%- elif backend == "poetry" %}
-requires = ["poetry_core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 {%- endif %}
 
-{%- if backend == "poetry" %}
-[tool.poetry]
-name = "{{ project_name }}"
-version = "0.1.0"
-authors = [
-  "{{ full_name }} <{{ email }}>",
-]
-homepage = "{{ url }}"
-repository = "{{ url }}"
 {%- if license == "BSD" %}
 license = "BSD-3-Clause"
 {%- elif license == "Apache" %}
@@ -42,21 +30,6 @@ classifiers = [
 {%- endif %}
 ]
 
-[tool.poetry.dependencies]
-python = ">={{ min_python_version }}"
-
-pytest = { version = ">=6", optional = true }
-pytest-cov = { version = ">=3", optional = true }
-
-[tool.poetry.dev-dependencies]
-pytest = ">= 6"
-pytest-cov = ">= 3"
-
-[tool.poetry.extras]
-test = ["pytest", "pytest-cov"]
-dev = ["pytest", "pytest-cov"]
-
-{%- else %}
 [project]
 name = "{{ project_name }}"
 version = "0.1.0"
@@ -116,7 +89,6 @@ envs.default.dependencies = [
   "pytest",
   "pytest-cov",
 ]
-{%- endif %}
 {%- endif %}
 
 [tool.pytest.ini_options]
