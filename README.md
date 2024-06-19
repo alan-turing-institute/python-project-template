@@ -16,6 +16,12 @@ Based on the [Scientific Python project template](https://github.com/scientific-
 - [Setting up a new project](#setting-up-a-new-project)
 - [Using your new project](#using-your-new-project)
 - [Migrating an existing project](#migrating-an-existing-project)
+- [Python environment](#python-environment)
+- [Installing your package in editable mode](#installing-your-package-in-editable-mode)
+- [Wrtiting code, running tests](#writing-code-running-tests)
+- [Formatting and checking your code](#formatting-and-checking-your-code)
+- [Publishing your package](#publishing-your-package)
+- [Updating your project when the template changes](#updating-your-project-when-the-template-changes)
 - [Inspiration](#inspiration)
 
 ## Setting up a new project
@@ -111,11 +117,10 @@ If you're taking code you've already written and want to use this template, you'
     where the first part is the package name, and the second part is the version specifier. You can find more information on version specifiers [here](https://www.python.org/dev/peps/pep-0440/#version-specifiers) to help you write these.
   - If you're using `poetry`, you'll need to add them to the `dependencies` field under the `tool.poetry` section.
 
-## Development workflow (time to code!)
+Once you've set up your new project, you can start developing your package. There are some guidelines for development included in the [`CONTRIBUTING.md`](project_template/CONTRIBUTING.md) file generated in your project, but the main things are repeated below.
 
-Once you've set up your new project, you can start developing your package. There are some guidelines for development included in the [`CONTRIBUTING.md`](project_template/CONTRIBUTING.md) file generated in your project, but the main things are repeated here for completeness.
 
-### Python environment management
+## Python environment management
 
 _Note: I will not be covering Conda environments in this section. Conda is great when your project has dependencies outside of Python packages that you want to manage! If you're using Conda, you can still use this template – these are just recommendations for managing Python environments that don't affect the package itself._
 
@@ -178,7 +183,7 @@ Then, to benefit from `uv`'s speed, you install your dependencies with:
 uv pip install ...  # as you would with pip!
 ```
 
-### Installing your package in editable mode
+## Installing your package in editable mode
 
 After your environment is set up, you can then install your project in editable mode (so that changes you make to the code are reflected in the installed package) by running:
 
@@ -188,13 +193,13 @@ pip install -e .  # or uv pip install -e . if you're using uv
 
 This will install your package in editable mode, so you can import it in other Python code through `import my_package_name` and access methods as if it were any other package. The editable part means that if you make changes to the code in the `src` directory, they will be reflected in the installed package, so your changes will be immediately available to any code that uses your package that you're working on.
 
-### Wrtiting code, running tests
+## Wrtiting code, running tests
 
 You're now ready to start developing your package! Add code to the `src` directory, tests to the `tests` directory, and run your tests with the  `pytest` command to make sure everything is working as expected. Settings for `pytest` are included in the `pyproject.toml` file.
 
 Additionally, the automated CI pipeline will run the tests for you, but it's a good idea to run them locally as well to catch any issues before you push your code.
 
-### Formatting & checking your code
+## Formatting and checking your code
 
 The tools for formatting and linting your code for errors are all bundled with [pre-commit](https://pre-commit.com/). Included are:
 - [ruff](https://astral.sh/ruff) (linting + formatting)
@@ -227,7 +232,7 @@ pre-commit run --all-files
 
 This will run the checks on all files in your git project, regardless of whether they're staged for commit or not.
 
-### Publishing your package
+## Publishing your package
 
 If you're ready to publish your package to [PyPI](https://pypi.org/) (i.e. you want to be able to run `pip install my-package-name` from anywhere), the template includes a GitHub Actions workflow that will automatically publish your package to PyPI when you create a new release on GitHub. The workflow is defined in the [`.github/workflows/cd.yml`](project_template/.github/workflows/cd.yml) file within the `project_template` folder.
 
@@ -247,6 +252,17 @@ Make sure to follow [semantic versioning](https://semver.org/) when updating the
 
 If this was your first time publishing, you will then  be able to install your package from PyPI with `pip install my-package-name`. Yay!
 
+## Updating your project when the template changes
+
+Copier has [instructions on how to update a template to the latest version](https://copier.readthedocs.io/en/stable/updating/), which I'll repeat here for completeness.
+
+If you want to update your project with the latest version of this template, you can run the following command (ensuring that your current project is committed and that you have no uncommitted changes, since the update will overwrite some files!):
+
+```bash
+copier update
+```
+
+Note that this is the purpose of the `.copier-answers.yml` file in the root of your project. This file is used by Copier to keep track of the answers you gave when you first created the project, allowing it to update the project correctly when you run `copier update`.
 
 
 ## Inspiration
