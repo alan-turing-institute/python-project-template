@@ -1,6 +1,6 @@
 # Template for Python projects
 
-This simple template is designed to help you get started with a new Python project. It includes:
+This setuptools-based template is designed to help you get started with a new Python project, or migrate an existing codebase. It includes:
 
 - The recommended `src/` layout for a Python package
 - A pre-configured `pyproject.toml` that controls your project metadata
@@ -45,10 +45,6 @@ You will be prompted for the following information:
 - `project_name`: The name of your project. This will be used to name the
   project directory, the Python package, and the GitHub repository.
 - `project_short_description`: A short description of your project.
-- `backend`: The backend to use for dependency management. Here, I've supported the main choices in our Research Engineering Group (`setuptools`/`poetry`), as well as `hatch`, which I've been using more recently.
-  - [`setuptools`](https://setuptools.readthedocs.io/en/latest/): The default Python packaging tool, configured with `pyproject.toml`.
-  - [`hatch`](https://hatch.pypa.io/latest/): Almost identical to `setuptools` in terms of config, but with a few extra features.
-  - [`poetry`](https://python-poetry.org/): An all-in-one tool for dependency management, packaging, and publishing, with a high learning curve. Use if you know what you're doing -- otherwise, I'd stick with `setuptools` or `hatch`.
 - `license`: The license to use for your project — PRs for other choices are welcome! The current supported options include:
   - `MIT`
   - `BSD-3-Clause`
@@ -104,8 +100,7 @@ If you're taking code you've already written and want to use this template, you'
   - By library code, I mean the code that you want to be importable by other Python code. If you have things like experiments, scripts, or notebooks, you should keep them in the root directory under a different name (e.g. `examples`, `notebooks` etc.)
 - Copy over any tests you have into the `tests` directory.
 - Go through the `pyproject.toml` file and make sure that the metadata is correct. This includes the `name`, `description`, `version`, `authors`, `license`, and `classifiers` fields.
-- Add your dependencies to the relevant section of the `pyproject.toml` file.
-  - If you're using `setuptools` or `hatch`, you'll need to add them to the `install_requires` field. Dependencies are formatted like this:
+- Add your dependencies to the relevant section of the `pyproject.toml` file under the `install_requires` field. Dependencies are formatted like this:
     ```
     [project]
     install_requires = [
@@ -115,7 +110,6 @@ If you're taking code you've already written and want to use this template, you'
     ]
     ```
     where the first part is the package name, and the second part is the version specifier. You can find more information on version specifiers [here](https://www.python.org/dev/peps/pep-0440/#version-specifiers) to help you write these.
-  - If you're using `poetry`, you'll need to add them to the `dependencies` field under the `tool.poetry` section.
 
 Once you've set up your new project, you can start developing your package. There are some guidelines for development included in the [`CONTRIBUTING.md`](project_template/CONTRIBUTING.md) file generated in your project, but the main things are repeated below.
 
@@ -124,7 +118,7 @@ Once you've set up your new project, you can start developing your package. Ther
 
 _Note: I will not be covering Conda environments in this section. Conda is great when your project has dependencies outside of Python packages that you want to manage! If you're using Conda, you can still use this template – these are just recommendations for managing Python environments that don't affect the package itself._
 
-Every project should have a Python environment set up to manage dependencies. `poetry` has its own virtual environment management (if you're not familiar with it, maybe don't use poetry!), but if you're using `setuptools` or `hatch`, you can use `venv` to create a new environment in the root of your project. To create an environment called `.venv`, run the following command in your terminal:
+Every project should have a Python environment set up to manage dependencies. You can use the built-in Python tool `venv` to create a new environment in the root of your project. To create an environment called `.venv`, run the following command in your terminal:
 
 ```
 python -m venv .venv
