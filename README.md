@@ -18,7 +18,7 @@ Based on the [Scientific Python project template](https://github.com/scientific-
 - [Migrating an existing project](#migrating-an-existing-project)
 - [Python environment management](#python-environment-management)
 - [Installing your package in editable mode](#installing-your-package-in-editable-mode)
-- [Wrtiting code, running tests](#writing-code,-running-tests)
+- [Wrtiting code and running tests](#writing-code-and-running-tests)
 - [Formatting and checking your code](#formatting-and-checking-your-code)
 - [Publishing your package](#publishing-your-package)
 - [Updating your project when the template changes](#updating-your-project-when-the-template-changes)
@@ -193,7 +193,7 @@ pip install -e .  # or uv pip install -e . if you're using uv
 
 This will install your package in editable mode, so you can import it in other Python code through `import my_package_name` and access methods as if it were any other package. The editable part means that if you make changes to the code in the `src` directory, they will be reflected in the installed package, so your changes will be immediately available to any code that uses your package that you're working on.
 
-## Wrtiting code, running tests
+## Wrtiting code and running tests
 
 You're now ready to start developing your package! Add code to the `src` directory, tests to the `tests` directory, and run your tests with the  `pytest` command to make sure everything is working as expected. Settings for `pytest` are included in the `pyproject.toml` file.
 
