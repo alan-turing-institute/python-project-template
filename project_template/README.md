@@ -14,7 +14,7 @@ python -m pip install {{ python_name }}
 
 From source:
 {% if backend == "poetry" -%}
-```bash 
+```bash
 git clone {{ url }}
 cd {{ project_name }}
 poetry install
