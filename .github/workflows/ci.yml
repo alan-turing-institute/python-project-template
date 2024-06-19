@@ -90,6 +90,8 @@ jobs:
         run: |
           cd my-project
           git init
+          git config --global user.email "foo@example.com"
+          git config --global user.name "gh_actions"
           git add --all
           git commit -m "Initial commit"
           pre-commit run --all-files
