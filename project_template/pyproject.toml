@@ -2,29 +2,6 @@
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
-{%- if license == "BSD" %}
-license = "BSD-3-Clause"
-{%- elif license == "Apache" %}
-license = "Apache-2.0"
-{%- elif license == "MIT" %}
-license = "MIT"
-{%- elif license == "GPL" %}
-license = "GPL-3.0-or-later"
-{%- endif %}
-description = "{{ project_short_description }}"
-readme = "README.md"
-
-classifiers = [
-  "Development Status :: 1 - Planning",
-  "Intended Audience :: Science/Research",
-  "Intended Audience :: Developers",
-  "Operating System :: OS Independent",
-  "Topic :: Scientific/Engineering",
-{% if typing != "no_typing" -%}
-  "Typing :: Typed",
-{%- endif %}
-]
-
 [project]
 name = "{{ project_name }}"
 version = "0.1.0"
