@@ -84,3 +84,15 @@ coc:
   choices:
     "I'll use/modify the basic Code of Conduct.": our_coc
     "I'll write my own Code of Conduct.": their_coc
+
+pypi:
+  type: str
+  help: Would you like to upload your package to PyPI?
+  choices:
+    "No/I'll configure it myself when I'm ready.": no_pypi
+    "Yes, I'll upload it.": yes_pypi
+
+codecov:
+  type: bool
+  help: Would you like to upload your coverage report to Codecov?
+  default: true
