@@ -3,7 +3,7 @@ name: update pre-commit hooks
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 3 * * *"
+    - cron: "0 7 * * 1"
 
 jobs:
   update-template:
