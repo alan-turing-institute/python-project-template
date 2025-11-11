@@ -31,7 +31,7 @@ python_name:
 
 full_name:
   type: str
-  help: Who's the main responsible for this code?
+  help: Who's the main person responsible for this code?
   placeholder: My Name
   validator: >-
     {% if not full_name %} You must provide a name (possibly yours) to place in
