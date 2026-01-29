@@ -41,6 +41,8 @@ jobs:
             -d backend=setuptools \
             -d typing=${{ matrix.typing }} \
             -d coc=our_coc \
+            -d pypi=yes_pypi \
+            -d codecov=true \
             --vcs-ref HEAD \
             . my-project
       - name: Check generated project installs with pip
@@ -86,6 +88,8 @@ jobs:
             -d backend=setuptools \
             -d typing=${{ matrix.typing }} \
             -d coc=our_coc \
+            -d pypi=yes_pypi \
+            -d codecov=true \
             --vcs-ref HEAD \
             . my-project
       - name: Run formatting checks
