@@ -30,7 +30,8 @@ jobs:
 
       - name: Check products
         run: pipx run twine check dist/*
-
+        
+{%- if pypi == "yes_pypi" %}
   publish:
     needs: [dist]
     name: Publish to PyPI
@@ -51,3 +52,4 @@ jobs:
         with:
           # Remove this line to publish to PyPI
           repository-url: https://test.pypi.org/legacy/
+{%- endif %}
