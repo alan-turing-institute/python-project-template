@@ -1,53 +1,71 @@
-See the [Scientific Python Developer Guide][spc-dev-intro] for a detailed
-description of best practices for developing scientific packages.
+# Contributing to {{ project_name }}
 
-[spc-dev-intro]: https://learn.scientific-python.org/development/
+## Prerequisites
 
-# Setting up a development environment manually
-
-You can set up a development environment by running:
-
-```zsh
-python3 -m venv venv          # create a virtualenv called venv
-source ./venv/bin/activate   # now `python` points to the virtualenv python
-pip install -v -e ".[dev]"    # -v for verbose, -e for editable, [dev] for dev dependencies
-```
-
-# Post setup
-
-You should prepare pre-commit, which will help you by checking that commits pass
-required checks:
+Install [uv](https://docs.astral.sh/uv/):
 
 ```bash
-pip install pre-commit # or brew install pre-commit on macOS
-pre-commit install # this will install a pre-commit hook into the git repo
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-You can also/alternatively run `pre-commit run` (changes only) or
-`pre-commit run --all-files` to check even without installing the hook.
-
-# Testing
-
-Use pytest to run the unit checks:
+## Setup
 
 ```bash
-pytest
+git clone {{ url }}
+cd {{ project_name }}
+uv sync
 ```
 
-# Coverage
+This installs the package in editable mode along with all dev dependencies, and
+creates a `uv.lock` lockfile for reproducible installs.
 
-Use pytest-cov to generate coverage reports:
+## Pre-commit
+
+Install the pre-commit hooks so checks run automatically on each commit:
 
 ```bash
-pytest --cov={{ python_name }}
+uv run pre-commit install
 ```
 
-# Pre-commit
-
-This project uses pre-commit for all style checking. Install pre-commit and run:
+You can also run them manually:
 
 ```bash
-pre-commit run -a
+uv run pre-commit run --all-files
 ```
 
-to check all files.
+## Testing
+
+```bash
+uv run pytest
+```
+
+With coverage:
+
+```bash
+uv run pytest --cov={{ python_name }}
+```
+
+## Linting and formatting
+
+```bash
+uv run ruff check --fix .
+uv run ruff format .
+```
+
+## Type checking
+
+```bash
+uvx ty check
+```
+
+## Adding dependencies
+
+- Runtime: `uv add <package>`
+- Test: `uv add --group test <package>`
+- Lint: `uv add --group lint <package>`
+
+## About `uv.lock`
+
+The `uv.lock` file is committed to the repository to ensure reproducible
+installs. CI uses `uv sync --locked` to verify the lockfile is up to date. If
+you change dependencies, run `uv lock` to update it.
