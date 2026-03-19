@@ -39,9 +39,16 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-  "pytest >=6",
-  "pytest-cov >=3",
-  "pre-commit",
+  { include-group = "test" },
+  { include-group = "lint" },
+  "pre-commit>=4.0",
+]
+test = [
+  "pytest>=8.0",
+  "pytest-cov>=6.0",
+]
+lint = [
+  "ruff>=0.15",
 ]
 
 [project.urls]
