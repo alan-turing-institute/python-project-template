@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.10.9,<0.11.0"]
+build-backend = "uv_build"
 
 [project]
 name = "{{ project_name }}"
@@ -11,31 +11,29 @@ authors = [
 description = "{{ project_short_description }}"
 readme = "README.md"
 requires-python = ">={{ min_python_version }}"
+{%- if license == "BSD" %}
+license = "BSD-3-Clause"
+{%- elif license == "Apache" %}
+license = "Apache-2.0"
+{%- elif license == "MIT" %}
+license = "MIT"
+{%- elif license == "GPL" %}
+license = "GPL-3.0-or-later"
+{%- endif %}
+license-files = ["LICENSE"]
 classifiers = [
   "Development Status :: 1 - Planning",
   "Intended Audience :: Science/Research",
   "Intended Audience :: Developers",
-{%- if license == "BSD" %}
-  "License :: OSI Approved :: BSD License",
-{%- elif license == "Apache" %}
-  "License :: OSI Approved :: Apache Software License",
-{%- elif license == "MIT" %}
-  "License :: OSI Approved :: MIT License",
-{%- elif license == "GPL" %}
-  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
-{%- endif %}
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering",
-{%- if typing != "no_typing" %}
   "Typing :: Typed",
-{%- endif %}
 ]
 dependencies = []
 
