@@ -50,6 +50,12 @@ test = [
 lint = [
   "ruff>=0.15",
 ]
+{%- if include_docs %}
+docs = [
+  "mkdocs-material>=9.0",
+  "mkdocstrings[python]>=0.27",
+]
+{%- endif %}
 
 [project.urls]
 Homepage = "{{ url }}"

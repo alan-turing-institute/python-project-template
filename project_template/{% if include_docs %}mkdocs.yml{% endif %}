@@ -1,0 +1,26 @@
+site_name: "{{ project_name }}"
+site_url: "https://{{ org }}.github.io/{{ project_name }}"
+repo_url: "{{ url }}"
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+    - search.highlight
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+nav:
+  - Home: index.md
+  - API Reference: reference.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
