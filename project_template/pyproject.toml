@@ -84,7 +84,7 @@ python-version = "{{ min_python_version }}"
 unused-ignore-comment = "warn"
 
 [tool.ty.src]
-include = ["src", "tests"]
+include = ["src"]
 
 [tool.ruff]
 src = ["src"]
