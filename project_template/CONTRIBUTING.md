@@ -26,7 +26,13 @@ creates a `uv.lock` lockfile for reproducible installs.
 
 ## Pre-commit
 
-Install the pre-commit hooks so checks run automatically on each commit:
+Pre-commit runs the following checks on each commit:
+
+- Code quality checks (trailing whitespace, merge conflicts, large files, etc.)
+- Linting and auto-fixing with [ruff](https://docs.astral.sh/ruff/)
+- Code formatting with [ruff format](https://docs.astral.sh/ruff/formatter/)
+
+Install the pre-commit hooks so these run automatically on each commit:
 
 ```bash
 uv run pre-commit install
