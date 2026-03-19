@@ -87,44 +87,30 @@ unused-ignore-comment = "warn"
 include = ["src"]
 
 [tool.ruff]
+line-length = 88
+target-version = "py{{ min_python_version | replace('.', '') }}"
 src = ["src"]
-exclude = []
-line-length = 88  # how long you want lines to be
-
-[tool.ruff.format]
-docstring-code-format = true  # code snippets in docstrings will be formatted
 
 [tool.ruff.lint]
 select = [
-  "E", "F", "W", # flake8
-  "B",           # flake8-bugbear
-  "I",           # isort
-  "ARG",         # flake8-unused-arguments
-  "C4",          # flake8-comprehensions
-  "EM",          # flake8-errmsg
-  "ICN",         # flake8-import-conventions
-  "ISC",         # flake8-implicit-str-concat
-  "G",           # flake8-logging-format
-  "PGH",         # pygrep-hooks
-  "PIE",         # flake8-pie
-  "PL",          # pylint
-  "PT",          # flake8-pytest-style
-  "RET",         # flake8-return
-  "RUF",         # Ruff-specific
-  "SIM",         # flake8-simplify
-  "UP",          # pyupgrade
-  "YTT",         # flake8-2020
-  "EXE",         # flake8-executable
+  "E",    # pycodestyle errors
+  "W",    # pycodestyle warnings
+  "F",    # Pyflakes
+  "I",    # isort
+  "UP",   # pyupgrade
+  "B",    # flake8-bugbear
+  "SIM",  # flake8-simplify
+  "C4",   # flake8-comprehensions
+  "RUF",  # Ruff-specific rules
 ]
-ignore = [
-  "PLR",    # Design related pylint codes
-  "ISC001", # Conflicts with formatter
-]
-unfixable = [
-  "F401",   # Would remove unused imports
-  "F841",   # Would remove unused variables
-]
-flake8-unused-arguments.ignore-variadic-names = true  # allow unused *args/**kwargs
-{%- if typing != "no_typing" -%}
-isort.required-imports = ["from __future__ import annotations"]
-{%- endif %}
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "D"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["{{ python_name }}"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
