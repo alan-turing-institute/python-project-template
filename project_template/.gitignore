@@ -20,7 +20,9 @@ htmlcov/
 
 # Linting / type checking
 .ruff_cache/
-.mypy_cache/
+
+# Environment / secrets
+.env
 
 # OS
 .DS_Store
@@ -29,3 +31,7 @@ Thumbs.db
 # Editors
 *~
 *.swp
+
+# Misc
+*.log
+.ipynb_checkpoints/

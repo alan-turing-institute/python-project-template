@@ -1,5 +1,10 @@
 # Contributing to {{ project_name }}
 
+See the [Scientific Python Developer Guide][spc-dev-intro] for a detailed
+description of best practices for developing scientific packages.
+
+[spc-dev-intro]: https://learn.scientific-python.org/development/
+
 ## Prerequisites
 
 Install [uv](https://docs.astral.sh/uv/):
@@ -58,9 +63,18 @@ uv run ruff format .
 uvx ty check
 ```
 
+## Building
+
+To verify the package builds correctly:
+
+```bash
+uv build
+```
+
 ## Adding dependencies
 
 - Runtime: `uv add <package>`
+- Dev: `uv add --group dev <package>`
 - Test: `uv add --group test <package>`
 - Lint: `uv add --group lint <package>`
 
