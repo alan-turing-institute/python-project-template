@@ -50,13 +50,6 @@ With coverage:
 uv run pytest --cov={{ python_name }}
 ```
 
-## Linting and formatting
-
-```bash
-uv run ruff check --fix .
-uv run ruff format .
-```
-
 ## Type checking
 
 ```bash
