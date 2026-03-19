@@ -1,39 +1,31 @@
-ci:
-  autoupdate_commit_msg: "chore: update pre-commit hooks"
-  autofix_commit_msg: "style: pre-commit fixes"
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v6.0.0"
+    rev: v5.0.0
     hooks:
-      - id: check-added-large-files
-      - id: check-case-conflict
-      - id: check-merge-conflict
-      - id: check-symlinks
-      - id: check-yaml
-      - id: debug-statements
-      - id: end-of-file-fixer
-      - id: mixed-line-ending
-      - id: name-tests-test
-        args: ["--pytest-test-first"]
-      - id: requirements-txt-fixer
       - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: debug-statements
+
+  - repo: https://github.com/abravalheri/validate-pyproject
+    rev: v0.24
+    hooks:
+      - id: validate-pyproject
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.15.6"
+    rev: v0.15.6
     hooks:
-      # first, lint + autofix
-      - id: ruff
-        types_or: [python, pyi, jupyter]
-        args: ["--fix", "--show-fixes"]
-      # then, format
+      - id: ruff-check
+        args: [--fix]
       - id: ruff-format
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: "v1.19.1"
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.10.9
     hooks:
-      - id: mypy
-        files: src
-        args: []
-        additional_dependencies:
-          - pytest
+      - id: uv-lock
+
+  # NOTE: ty pre-commit hook not yet available (astral-sh/ty#269).
+  # Add it here when Astral ships an official hook.
