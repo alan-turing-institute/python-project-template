@@ -77,27 +77,14 @@ port.exclude_lines = [
   'if typing.TYPE_CHECKING:',
 ]
 
-{% if typing != "no_typing" -%}
-[tool.mypy]
-files = ["src", "tests"]
-python_version = "{{ min_python_version }}"
-show_error_codes = true
-warn_unreachable = true
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-check_untyped_defs = true
-{% if typing == "loose" -%}
-strict = false
-{% elif typing == "strict" -%}
-strict = true
-enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+[tool.ty.environment]
+python-version = "{{ min_python_version }}"
 
-[[tool.mypy.overrides]]
-module = "{{ python_name }}.*"
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-{%- endif %}
-{%- endif %}
+[tool.ty.rules]
+unused-ignore-comment = "warn"
+
+[tool.ty.src]
+include = ["src", "tests"]
 
 [tool.ruff]
 src = ["src"]
