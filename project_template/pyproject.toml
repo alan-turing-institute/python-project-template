@@ -101,6 +101,9 @@ select = [
   "B",    # flake8-bugbear
   "SIM",  # flake8-simplify
   "C4",   # flake8-comprehensions
+  "PT",   # flake8-pytest-style
+  "G",    # flake8-logging-format
+  "PGH",  # pygrep-hooks
   "RUF",  # Ruff-specific rules
 ]
 ignore = ["E501"]
