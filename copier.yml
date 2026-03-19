@@ -4,83 +4,79 @@ _templates_suffix: ""
 _skip_if_exists:
   - CHANGELOG.md
 
+_tasks:
+  - "git init"
+  - "uv sync"
+  - "uv run pre-commit install"
+
 # PROMPT --------------------------------
 project_name:
   type: str
-  help: Please provide the name of your project.
+  help: The name of your project (used for the directory, package name, and repo).
   validator: >-
-    {% if not project_name %} You must provide a name for the project. {% endif
-    %}
-
-org:
-  type: str
-  help: What GitHub user is this project under?
-  validator: >-
-    {% if not org %} You must provide a org for the project. It might just be
-    your user name on the site (like GitHub) you are targeting. {% endif %}
-
-url:
-  type: str
-  help: Provide/modify the url to your GitHub repository if needed.
-  default: "https://github.com/{{org}}/{{project_name}}"
-
-python_name:
-  type: str
-  help: The Python package import name (for `import NAME` in Python code)
-  default: "{{ project_name|lower|replace('-', '_')|replace(' ', '_') }}"
-
-full_name:
-  type: str
-  help: Who's the main responsible for this code?
-  placeholder: My Name
-  validator: >-
-    {% if not full_name %} You must provide a name (possibly yours) to place in
-    your config files. {% endif %}
-
-email:
-  type: str
-  help: What's their email?
-  placeholder: me@email.com
-  validator: >-
-    {% if not (email | regex_search('^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
-    You must provide a valid email to place in
-    your config files.
-    {% endif %}
+    {% if not project_name %} You must provide a name for the project. {% endif %}
 
 project_short_description:
   type: str
-  help: Write a short description of your project.
-  default: A great package.
+  help: A short description of your project.
+  default: A Python project
+
+python_name:
+  type: str
+  help: The Python package import name (for `import NAME` in Python code).
+  default: "{{ project_name|lower|replace('-', '_')|replace(' ', '_') }}"
+  validator: >-
+    {% if not (python_name | regex_search('^[a-zA-Z_][a-zA-Z0-9_]*$')) %}
+    Must be a valid Python identifier (letters, digits, underscores; cannot start with a digit).
+    {% endif %}
+
+full_name:
+  type: str
+  help: Author name.
+  placeholder: My Name
+  validator: >-
+    {% if not full_name %} You must provide an author name. {% endif %}
+
+email:
+  type: str
+  help: Author email.
+  placeholder: me@email.com
+  validator: >-
+    {% if not (email | regex_search('^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$')) %}
+    You must provide a valid email address.
+    {% endif %}
 
 license:
   type: str
-  help: Select a license
+  help: Select a license.
   choices:
-    - BSD
-    - Apache
-    - MIT
-    - GPL
+    MIT: MIT
+    BSD-3-Clause: BSD
+    Apache-2.0: Apache
+    GPL-3.0-or-later: GPL
 
 min_python_version:
   type: str
-  help: What is the minimum version of Python your project will support? (Defaults to minimum supported by NumPy)
-  default: "3.10"
+  help: Minimum Python version to support.
+  default: "3.11"
+  choices:
+    "3.11": "3.11"
+    "3.12": "3.12"
+    "3.13": "3.13"
+
+include_docs:
+  type: bool
+  help: Include MkDocs Material documentation scaffolding?
+  default: true
+
+org:
+  type: str
+  help: GitHub organisation or username.
+  default: alan-turing-institute
   validator: >-
-    {% if not (min_python_version | regex_search('[3][.][0-9]+')) %}
-    Please supply a valid Python 3 version (e.g. 3.11).
-    {% endif %}
+    {% if not org %} You must provide a GitHub org or username. {% endif %}
 
-typing:
+url:
   type: str
-  help: Would you like to use static type checking? (This configures mypy.)
-  choices:
-    "No/I'll configure it myself.": no_typing
-    "Basic type checking (type annotations not required).": loose
-    "Full type checking (type annotations required).": strict
-
-coc:
-  type: str
-  help: We provide a basic Code of Conduct that can be modified to suit the needs of your project. Would you like to use this, or write your own?
-  choices:
-    "I'll use/modify the basic Code of Conduct.": our_coc
-    "I'll write my own Code of Conduct.": their_coc
+  help: Repository URL.
+  default: "https://github.com/{{org}}/{{project_name}}"

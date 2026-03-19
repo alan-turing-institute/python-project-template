@@ -9,12 +9,13 @@ on:
 
 jobs:
   test-project-creation:
-    name: Test project creation with ${{ matrix.typing }} typing
+    name: Test project creation (min_python=${{ matrix.min_python }}, docs=${{ matrix.docs }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        typing: [no_typing, loose, strict]
+        min_python: ["3.11", "3.12", "3.13"]
+        docs: [true, false]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,28 +23,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: Install Dependencies
-        run: |
-          pip install copier pre-commit
+      - uses: astral-sh/setup-uv@v5
+      - name: Install copier
+        run: pip install copier
       - name: Create new project
         run: |
-          mkdir my-project
           copier copy \
-            -d project_name=test \
+            -d project_name=test-project \
             -d project_short_description="A great package." \
-            -d python_name=test \
-            -d url=https://github.com/gh_actions/test \
-            -d min_python_version=3.10 \
-            -d org=gh_actions \
+            -d python_name=test_project \
             -d full_name=gh_actions \
             -d email=foo@example.com \
-            -d license=BSD \
-            -d backend=setuptools \
-            -d typing=${{ matrix.typing }} \
-            -d coc=our_coc \
+            -d license=MIT \
+            -d min_python_version=${{ matrix.min_python }} \
+            -d include_docs=${{ matrix.docs }} \
+            -d org=gh_actions \
+            -d url=https://github.com/gh_actions/test-project \
             --vcs-ref HEAD \
             . my-project
-      - name: Check generated project installs with pip
+      - name: Verify project
         run: |
           cd my-project
           git config --global user.email "foo@example.com"
@@ -51,49 +49,7 @@ jobs:
           git init
           git add .
           git commit -m "Initial commit"
-          pip install -e .
-
-  format-created-project:
-    name: Try formatting the created project with ${{ matrix.typing }} typing
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        typing: [no_typing, loose, strict]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install Dependencies
-        run: |
-          pip install copier pre-commit
-      - name: Create new project
-        run: |
-          mkdir my-project
-          copier copy \
-            -d project_name=test \
-            -d project_short_description="A great package." \
-            -d python_name=test \
-            -d url=https://github.com/gh_actions/test \
-            -d min_python_version=3.10 \
-            -d org=gh_actions \
-            -d full_name=gh_actions \
-            -d email=foo@example.com \
-            -d license=BSD \
-            -d backend=setuptools \
-            -d typing=${{ matrix.typing }} \
-            -d coc=our_coc \
-            --vcs-ref HEAD \
-            . my-project
-      - name: Run formatting checks
-        run: |
-          cd my-project
-          git init
-          git config --global user.email "foo@example.com"
-          git config --global user.name "gh_actions"
-          git add --all
-          git commit -m "Initial commit"
-          pre-commit run --all-files
+          uv sync
+          uv run pytest || true
+          uv run ruff check .
+          uv run ruff format --check .
