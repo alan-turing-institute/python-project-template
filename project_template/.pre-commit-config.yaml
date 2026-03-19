@@ -17,19 +17,20 @@ repos:
         args: ["--pytest-test-first"]
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24
+    rev: v0.25
     hooks:
       - id: validate-pyproject
+        additional_dependencies: ["validate-pyproject-schema-store[all]"]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.6
+    rev: v0.15.7
     hooks:
       - id: ruff-check
         args: [--fix, --show-fixes]
       - id: ruff-format
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.10.9
+    rev: 0.10.11
     hooks:
       - id: uv-lock
 
