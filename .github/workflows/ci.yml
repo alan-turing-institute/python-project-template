@@ -52,7 +52,6 @@ jobs:
               return f"Hello, {name}!"
           PYEOF
 
-          mkdir -p my-project/tests
           cat <<'PYEOF' > my-project/tests/test_hello.py
           from test_project.hello import greet
 
