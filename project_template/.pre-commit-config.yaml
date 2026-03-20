@@ -28,4 +28,3 @@ repos:
         args: ["--fix", "--show-fixes"]
       # then, format
       - id: ruff-format
-
