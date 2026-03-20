@@ -7,7 +7,7 @@ This setuptools-based template is designed to help you get started with a new Py
 - Linting + formatting via `ruff` and `pre-commit`
 - `pytest` set up to run automatically on your commits through GitHub Actions
 - Semi-automated releases to PyPI via GitHub tags + GitHub Actions
-- Opt-in typing support via `mypy`
+- Opt-in typing support via `ty`
 
 Based on the [Scientific Python project template](https://github.com/scientific-python/cookie).
 
@@ -51,7 +51,7 @@ You will be prompted for the following information:
   - `Apache-2.0`
   - `GPL-3.0`
 - `python_name`: The name of your project when you do `import name` (and potentially `pip install name`). This should be a valid Python package name (use underscores instead of hyphens, for example).
-- `typing`: Whether to use `mypy` for type checking. If you're not sure, I'd recommend basic checks (second option).
+- `typing`: Whether to use `ty` for type checking. If you're not sure, I'd recommend basic checks (second option).
 - `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.10`.
 
 Great! Copier will have now created a new project in the directory you specified by replacing `my-package-name`, and customized it based on the information you provided.
@@ -197,7 +197,7 @@ Additionally, the automated CI pipeline will run the tests for you, but it's a g
 
 The tools for formatting and linting your code for errors are all bundled with [pre-commit](https://pre-commit.com/). Included are:
 - [ruff](https://astral.sh/ruff) (linting + formatting)
-- [mypy](https://mypy.readthedocs.io/en/stable/) (static type checking)
+- [ty](https://docs.astral.sh/ty/) (static type checking)
 - various other small fixes and checks (see the [`.pre-commit-config.yaml`](project_template/.pre-commit-config.yaml) file for more information)
 
 To have pre-commit check your files before you commit them, you can run the following command:
@@ -261,6 +261,6 @@ Note that this is the purpose of the `.copier-answers.yml` file in the root of y
 
 ## Inspiration
 
-This template heavily draws upon the [Scientific Python template](https://github.com/scientific-python/cookie) to motivate choices for default options for linters, backends etc. If you haven't worked with any of the tools in this repo (e.g. pre-commit, ruff, mypy, pytest) or want to know more about Python project setup in general, then you'll benefit from reading the fantastic [Scientific Python Development Guidelines](https://learn.scientific-python.org/development/).
+This template heavily draws upon the [Scientific Python template](https://github.com/scientific-python/cookie) to motivate choices for default options for linters, backends etc. If you haven't worked with any of the tools in this repo (e.g. pre-commit, ruff, ty, pytest) or want to know more about Python project setup in general, then you'll benefit from reading the fantastic [Scientific Python Development Guidelines](https://learn.scientific-python.org/development/).
 
 It's worth noting that the original template also has support for many more backends, including the use of compiled extensions (e.g. in Rust or C++). The only reason this is not a fork is that I wanted to both simplify the options available, and make the hard switch to [copier](https://copier.readthedocs.io/en/stable/) instead of [cookiecutter](https://cookiecutter.readthedocs.io/en/stable/) as a templating engine, since it lets you [natively update your project in-place to the latest template](https://copier.readthedocs.io/en/stable/updating/), even after you've worked on it for a while.

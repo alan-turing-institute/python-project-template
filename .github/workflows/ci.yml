@@ -76,7 +76,7 @@ jobs:
         working-directory: my-project
 
       - name: Run type checker
-        run: uvx ty check
+        run: uv run ty check
         working-directory: my-project
 
       - name: Build package
