@@ -49,6 +49,7 @@ test = [
 ]
 lint = [
   "ruff>=0.15",
+  "ty>=0.0.1a7",
 ]
 
 [project.urls]

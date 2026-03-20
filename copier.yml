@@ -72,7 +72,7 @@ min_python_version:
 
 typing:
   type: str
-  help: Would you like to use static type checking? (This configures mypy.)
+  help: Would you like to use static type checking? (This configures ty.)
   choices:
     "No/I'll configure it myself.": no_typing
     "Basic type checking (type annotations not required).": loose

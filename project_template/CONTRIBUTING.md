@@ -59,7 +59,7 @@ uv run pytest --cov={{ python_name }}
 ## Type checking
 
 ```bash
-uvx ty check
+uv run ty check
 ```
 
 ## Building
