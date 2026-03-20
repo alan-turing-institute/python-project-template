@@ -63,6 +63,11 @@ jobs:
           git add .
           git commit -m "Initial commit"
 
+      - name: Lint generated workflows
+        uses: raven-actions/actionlint@v2
+        with:
+          files: "my-project/.github/workflows/*.yml"
+
       - name: Verify dependencies resolve
         run: uv sync
         working-directory: my-project
