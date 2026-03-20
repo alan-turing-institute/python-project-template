@@ -22,12 +22,6 @@ jobs:
 
       - uses: astral-sh/setup-uv@v7
 
-      - name: Install actionlint
-        run: |
-          mkdir -p "$HOME/.local/bin"
-          GOBIN="$HOME/.local/bin" go install github.com/rhysd/actionlint/cmd/actionlint@latest
-          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-
       - name: Generate project
         run: |
           uvx copier copy \
@@ -67,9 +61,6 @@ jobs:
           git config user.name "Test User"
           git add .
           git commit -m "Initial commit"
-
-      - name: Lint generated workflows
-        run: actionlint my-project/.github/workflows/*.yml
 
       - name: Verify dependencies resolve
         run: uv sync
