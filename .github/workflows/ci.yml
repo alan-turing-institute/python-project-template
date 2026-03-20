@@ -1,99 +1,92 @@
 name: CI
 
 on:
-  workflow_dispatch:
-  pull_request:
   push:
     branches:
       - main
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  test-project-creation:
-    name: Test project creation with ${{ matrix.typing }} typing
+  validate-generated-project:
+    name: Validate generated project
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        typing: [no_typing, loose, strict]
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install Dependencies
+
+      - uses: astral-sh/setup-uv@v7
+
+      - name: Install actionlint
         run: |
-          pip install copier pre-commit
-      - name: Create new project
+          mkdir -p "$HOME/.local/bin"
+          GOBIN="$HOME/.local/bin" go install github.com/rhysd/actionlint/cmd/actionlint@latest
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Generate project
         run: |
-          mkdir my-project
-          copier copy \
-            -d project_name=test \
-            -d project_short_description="A great package." \
-            -d python_name=test \
-            -d url=https://github.com/gh_actions/test \
-            -d min_python_version=3.10 \
-            -d org=gh_actions \
-            -d full_name=gh_actions \
-            -d email=foo@example.com \
-            -d license=BSD \
-            -d backend=setuptools \
-            -d typing=${{ matrix.typing }} \
+          uvx copier copy \
+            -d project_name=test-project \
+            -d 'project_short_description=A great package.' \
+            -d python_name=test_project \
+            -d url=https://github.com/test-org/test-project \
+            -d min_python_version=3.11 \
+            -d org=test-org \
+            -d 'full_name=Test User' \
+            -d email=test@example.com \
+            -d license=MIT \
+            -d typing=no_typing \
             -d coc=our_coc \
             --vcs-ref HEAD \
             . my-project
-      - name: Check generated project installs with pip
+
+      - name: Inject test code
+        run: |
+          cat <<'PYEOF' > my-project/src/test_project/hello.py
+          def greet(name: str) -> str:
+              return f"Hello, {name}!"
+          PYEOF
+
+          cat <<'PYEOF' > my-project/tests/test_hello.py
+          from test_project.hello import greet
+
+          def test_greet():
+              assert greet("World") == "Hello, World!"
+          PYEOF
+
+      - name: Init git repo in generated project
         run: |
           cd my-project
-          git config --global user.email "foo@example.com"
-          git config --global user.name "gh_actions"
           git init
+          git config user.email "test@example.com"
+          git config user.name "Test User"
           git add .
           git commit -m "Initial commit"
-          pip install -e .
 
-  format-created-project:
-    name: Try formatting the created project with ${{ matrix.typing }} typing
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        typing: [no_typing, loose, strict]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install Dependencies
-        run: |
-          pip install copier pre-commit
-      - name: Create new project
-        run: |
-          mkdir my-project
-          copier copy \
-            -d project_name=test \
-            -d project_short_description="A great package." \
-            -d python_name=test \
-            -d url=https://github.com/gh_actions/test \
-            -d min_python_version=3.10 \
-            -d org=gh_actions \
-            -d full_name=gh_actions \
-            -d email=foo@example.com \
-            -d license=BSD \
-            -d backend=setuptools \
-            -d typing=${{ matrix.typing }} \
-            -d coc=our_coc \
-            --vcs-ref HEAD \
-            . my-project
-      - name: Run formatting checks
-        run: |
-          cd my-project
-          git init
-          git config --global user.email "foo@example.com"
-          git config --global user.name "gh_actions"
-          git add --all
-          git commit -m "Initial commit"
-          pre-commit run --all-files
+      - name: Lint generated workflows
+        run: actionlint my-project/.github/workflows/*.yml
+
+      - name: Verify dependencies resolve
+        run: uv sync
+        working-directory: my-project
+
+      - name: Run pre-commit checks
+        run: uv run pre-commit run --all-files
+        working-directory: my-project
+
+      - name: Run tests
+        run: uv run pytest
+        working-directory: my-project
+
+      - name: Run type checker
+        run: uvx ty check
+        working-directory: my-project
+
+      - name: Build package
+        run: uv build
+        working-directory: my-project
