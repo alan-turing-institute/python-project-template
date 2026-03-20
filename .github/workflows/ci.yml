@@ -39,6 +39,21 @@ jobs:
             --vcs-ref HEAD \
             . my-project
 
+      - name: Show generated files
+        run: |
+          echo "::group::pyproject.toml"
+          cat my-project/pyproject.toml
+          echo "::endgroup::"
+          echo "::group::ci.yml"
+          cat my-project/.github/workflows/ci.yml
+          echo "::endgroup::"
+          echo "::group::cd.yml"
+          cat my-project/.github/workflows/cd.yml
+          echo "::endgroup::"
+          echo "::group::pre-commit-config.yaml"
+          cat my-project/.pre-commit-config.yaml
+          echo "::endgroup::"
+
       - name: Inject test code
         run: |
           cat <<'PYEOF' > my-project/src/test_project/hello.py
