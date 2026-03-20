@@ -49,6 +49,7 @@ jobs:
           cat <<'PYEOF' > my-project/tests/test_hello.py
           from test_project.hello import greet
 
+
           def test_greet():
               assert greet("World") == "Hello, World!"
           PYEOF
