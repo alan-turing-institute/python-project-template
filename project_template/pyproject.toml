@@ -11,15 +11,7 @@ authors = [
 description = "{{ project_short_description }}"
 readme = "README.md"
 requires-python = ">={{ min_python_version }}"
-{%- if license == "BSD" %}
-license = "BSD-3-Clause"
-{%- elif license == "Apache" %}
-license = "Apache-2.0"
-{%- elif license == "MIT" %}
-license = "MIT"
-{%- elif license == "GPL" %}
-license = "GPL-3.0-or-later"
-{%- endif %}
+license = "{{ license_spdx }}"
 license-files = ["LICENSE"]
 classifiers = [
   "Development Status :: 1 - Planning",

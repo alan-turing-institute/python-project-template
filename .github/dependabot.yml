@@ -1,0 +1,13 @@
+version: 2
+updates:
+  # Dependencies of the generated project, not of this repo
+  - package-ecosystem: "uv"
+    directory: "/project_template"
+    schedule:
+      interval: "weekly"
+    # Specs are lower bounds only (e.g. ruff>=0.15), so raise the bound
+    # rather than leaving an already-satisfied range alone
+    versioning-strategy: increase
+    groups:
+      template-deps:
+        patterns: ["*"]

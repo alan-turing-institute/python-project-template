@@ -61,6 +61,12 @@ license:
     - MIT
     - GPL
 
+license_spdx:
+  type: str
+  when: false
+  default: >-
+    {{ {"BSD": "BSD-3-Clause", "Apache": "Apache-2.0", "MIT": "MIT", "GPL": "GPL-3.0-or-later"}[license] }}
+
 min_python_version:
   type: str
   help: What is the minimum version of Python your project will support? (Defaults to minimum supported by NumPy)
