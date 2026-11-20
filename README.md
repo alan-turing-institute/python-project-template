@@ -52,6 +52,9 @@ You will be prompted for the following information:
   - `GPL-3.0`
 - `python_name`: The name of your project when you do `import name` (and potentially `pip install name`). This should be a valid Python package name (use underscores instead of hyphens, for example).
 - `typing`: Whether to use `ty` for type checking. If you're not sure, I'd recommend basic checks (second option).
+  - No: `ty` is not installed or run in CI.
+  - Basic: `ty` checks the code in `src/`, but type annotations are not required.
+  - Full: as basic, but `ty` warnings are treated as errors, and ruff's `ANN` rules require type annotations in `src/` (not `tests/`).
 - `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.10`.
 
 Great! Copier will have now created a new project in the directory you specified by replacing `my-package-name`, and customized it based on the information you provided.

@@ -13,8 +13,12 @@ concurrency:
 
 jobs:
   validate-generated-project:
-    name: Validate generated project
+    name: Validate generated project (typing=${{ matrix.typing }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        typing: [no_typing, loose, strict]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,7 +38,7 @@ jobs:
             -d 'full_name=Test User' \
             -d email=test@example.com \
             -d license=MIT \
-            -d typing=no_typing \
+            -d typing=${{ matrix.typing }} \
             -d coc=our_coc \
             --vcs-ref HEAD \
             . my-project
@@ -96,6 +100,7 @@ jobs:
         working-directory: my-project
 
       - name: Run type checker
+        if: matrix.typing != 'no_typing'
         run: uv run ty check
         working-directory: my-project
 

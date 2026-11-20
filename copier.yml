@@ -3,6 +3,10 @@ _subdirectory: project_template
 _templates_suffix: ""
 _skip_if_exists:
   - CHANGELOG.md
+# Lines starting with "#%" are Jinja statements (e.g. "#% if typing == 'strict'"),
+# which keeps templated TOML/YAML valid so tools like Dependabot can parse it.
+_envops:
+  line_statement_prefix: "#%"
 
 # PROMPT --------------------------------
 project_name:
