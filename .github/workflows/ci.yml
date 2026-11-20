@@ -33,7 +33,7 @@ jobs:
             -d 'project_short_description=A great package.' \
             -d python_name=test_project \
             -d url=https://github.com/test-org/test-project \
-            -d min_python_version=3.11 \
+            -d min_python_version=3.12 \
             -d org=test-org \
             -d 'full_name=Test User' \
             -d email=test@example.com \

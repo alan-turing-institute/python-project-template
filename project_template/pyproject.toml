@@ -10,7 +10,9 @@ authors = [
 ]
 description = "{{ project_short_description }}"
 readme = "README.md"
-requires-python = ">={{ min_python_version }}"
+#% filter replace("3.12", min_python_version)
+requires-python = ">=3.12"
+#% endfilter
 license = "{{ license_spdx }}"
 license-files = ["LICENSE"]
 classifiers = [

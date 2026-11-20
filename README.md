@@ -55,7 +55,7 @@ You will be prompted for the following information:
   - No: `ty` is not installed or run in CI.
   - Basic: `ty` checks the code in `src/`, but type annotations are not required.
   - Full: as basic, but `ty` warnings are treated as errors, and ruff's `ANN` rules require type annotations in `src/` (not `tests/`).
-- `python_version_range`: The range of Python versions to support. This will be used to set the `python_requires` field in `pyproject.toml`. Defaults to `>=3.10`.
+- `min_python_version`: The minimum version of Python to support. This will be used to set the `requires-python` field in `pyproject.toml`. Defaults to `3.12`.
 
 Great! Copier will have now created a new project in the directory you specified by replacing `my-package-name`, and customized it based on the information you provided.
 

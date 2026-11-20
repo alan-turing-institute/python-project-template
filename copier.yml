@@ -74,10 +74,10 @@ license_spdx:
 min_python_version:
   type: str
   help: What is the minimum version of Python your project will support? (Defaults to minimum supported by NumPy)
-  default: "3.10"
+  default: "3.12"
   validator: >-
     {% if not (min_python_version | regex_search('[3][.][0-9]+')) %}
-    Please supply a valid Python 3 version (e.g. 3.11).
+    Please supply a valid Python 3 version (e.g. 3.12).
     {% endif %}
 
 typing:
