@@ -10,7 +10,9 @@ authors = [
 ]
 description = "{{ project_short_description }}"
 readme = "README.md"
-requires-python = ">={{ min_python_version }}"
+#% filter replace("3.12", min_python_version)
+requires-python = ">=3.12"
+#% endfilter
 license = "{{ license_spdx }}"
 license-files = ["LICENSE"]
 classifiers = [
@@ -41,7 +43,9 @@ test = [
 ]
 lint = [
   "ruff>=0.15",
+#% if typing != "no_typing"
   "ty>=0.0.1a7",
+#% endif
 ]
 
 [project.urls]
@@ -70,6 +74,7 @@ port.exclude_lines = [
   'if typing.TYPE_CHECKING:',
 ]
 
+#% if typing != "no_typing"
 [tool.ty.environment]
 python-version = "{{ min_python_version }}"
 
@@ -79,6 +84,12 @@ unused-ignore-comment = "warn"
 [tool.ty.src]
 include = ["src"]
 
+#% if typing == "strict"
+[tool.ty.terminal]
+error-on-warning = true
+
+#% endif
+#% endif
 [tool.ruff]
 line-length = 88
 target-version = "py{{ min_python_version | replace('.', '') }}"
@@ -104,6 +115,16 @@ unfixable = [
   "F401",   # Would remove unused imports
   "F841",   # Would remove unused variables
 ]
+
+#% if typing == "strict"
+extend-select = [
+  "ANN",  # flake8-annotations: require type annotations
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN"]
+
+#% endif
 
 [tool.ruff.lint.isort]
 known-first-party = ["{{ python_name }}"]
